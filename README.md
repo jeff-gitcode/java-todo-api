@@ -5,7 +5,7 @@ This project is a Todo API built using Java 23, Spring Boot, and SQLite, followi
 ## Project Structure
 
 ```
-java23-todo-api
+java-todo-api
 ├── src
 │   ├── main
 │   │   ├── java
@@ -36,7 +36,7 @@ java23-todo-api
 │           └── com
 │               └── example
 │                   └── TodoServiceTest.java
-├── build.gradle
+├── pom.xml
 └── README.md
 ```
 
@@ -50,6 +50,22 @@ java23-todo-api
 ## Setup Instructions
 
 1. Clone the repository:
+   ```
+   git clone <repository-url>
+   cd todo-api
+   ```
+
+2. Build the project using Maven:
+   ```
+   mvn clean install
+   ```
+
+3. Run the application:
+   ```
+   mvn spring-boot:run
+   ```
+   
+<!-- 1. Clone the repository:
    ```
    git clone <repository-url>
    cd java23-todo-api
@@ -69,7 +85,7 @@ java23-todo-api
 - On Windows:
   ```
   gradlew.bat build
-  ```
+  ``` -->
 
 3. Run the application:
 - On Unix-based systems:
