@@ -3,6 +3,7 @@ D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\Dele
 D:\dev\java\git\java-todo-api\src\main\java\com\example\domain\query\GetTodoByIdQuery.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\GetTodoByIdQueryHandler.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\domain\command\DeleteTodoCommand.java
+D:\dev\java\git\java-todo-api\src\main\java\com\example\SpringFoxConfig.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\GetAllTodosQueryHandler.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\presentation\controller\HelloController.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\domain\model\Todo.java

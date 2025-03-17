@@ -54,6 +54,8 @@ java-todo-api
 2. Build the project using Maven:
    ```
    mvn clean install
+   or
+   mvn dependency:purge-local-repository -DreResolve=true
    ```
 
 3. Run the application:

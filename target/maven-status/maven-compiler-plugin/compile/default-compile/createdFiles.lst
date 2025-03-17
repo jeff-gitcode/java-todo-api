@@ -4,6 +4,7 @@ com\example\domain\model\Todo.class
 com\example\presentation\controller\TodoController.class
 com\example\application\usecase\UpdateTodoCommandHandler.class
 com\example\domain\command\UpdateTodoCommand.class
+com\example\SpringFoxConfig.class
 com\example\domain\query\GetAllTodosQuery.class
 com\example\presentation\controller\HelloController.class
 com\example\domain\query\GetTodoByIdQuery.class
