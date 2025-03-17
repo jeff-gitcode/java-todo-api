@@ -1,0 +1,5 @@
+com\example\AppRunner.class
+com\example\App.class
+com\example\model\Todo.class
+com\example\infrastructure\TodoRepository.class
+com\example\application\TodoService.class
