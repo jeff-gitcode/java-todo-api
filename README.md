@@ -65,6 +65,10 @@ java-todo-api
    mvn org.springframework.boot:spring-boot-maven-plugin:run
    ```
 
+4. Access the API at `http://localhost:8080/todos`.
+
+5. Access Swagger UI for API documentation and testing at `http://localhost:8080/swagger-ui/index.html`.
+
 <!-- 1. Clone the repository:
    ```
    git clone <repository-url>
