@@ -1,0 +1,25 @@
+### Create a Todo
+POST http://localhost:8080/todos
+Content-Type: application/json
+
+{
+  "title": "New Todo",
+}
+
+### Get All Todos
+GET http://localhost:8080/todos
+
+### Get a Todo by ID
+GET http://localhost:8080/todos/3
+
+### Update a Todo
+PUT http://localhost:8080/todos/1
+Content-Type: application/json
+
+{
+  "title": "Updated Todo",
+  "description": "Updated description of the todo"
+}
+
+### Delete a Todo
+DELETE http://localhost:8080/todos/2
