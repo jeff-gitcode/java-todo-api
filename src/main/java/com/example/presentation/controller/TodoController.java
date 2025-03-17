@@ -60,13 +60,15 @@ public class TodoController {
     }
 
     @PostMapping
-    public Todo createTodo(@RequestBody CreateTodoCommand command) {
+    public Todo createTodo(@RequestBody Todo todo) {
+        CreateTodoCommand command = new CreateTodoCommand(todo.getTitle());
+
         return createTodoCommandHandler.handle(command);
     }
     
     @PutMapping("/{id}")
-    public Todo updateTodo(@PathVariable Long id, @RequestBody UpdateTodoCommand command) {
-        command = new UpdateTodoCommand(id, command.getTitle());
+    public Todo updateTodo(@PathVariable Long id, @RequestBody Todo todo) {
+        UpdateTodoCommand command = new UpdateTodoCommand(id, todo.getTitle());
         return updateTodoCommandHandler.handle(command);
     }    
 }

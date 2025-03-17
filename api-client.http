@@ -3,7 +3,7 @@ POST http://localhost:8080/todos
 Content-Type: application/json
 
 {
-  "title": "New Todo",
+  "title": "New Todo"
 }
 
 ### Get All Todos
@@ -13,12 +13,11 @@ GET http://localhost:8080/todos
 GET http://localhost:8080/todos/3
 
 ### Update a Todo
-PUT http://localhost:8080/todos/1
+PUT http://localhost:8080/todos/6
 Content-Type: application/json
 
 {
-  "title": "Updated Todo",
-  "description": "Updated description of the todo"
+  "title": "Updated Todo"
 }
 
 ### Delete a Todo
