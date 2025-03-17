@@ -59,6 +59,8 @@ java-todo-api
 3. Run the application:
    ```
    mvn spring-boot:run
+   or
+   mvn org.springframework.boot:spring-boot-maven-plugin:run
    ```
 
 <!-- 1. Clone the repository:
