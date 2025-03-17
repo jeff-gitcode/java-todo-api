@@ -21,10 +21,6 @@ java-todo-api
 │   │   │           │   └── command
 │   │   │           │       └── CreateTodoCommand.java
 │   │   │           ├── infrastructure
-│   │   │           │   ├── persistence
-│   │   │           │   │   └── SQLiteTodoRepository.java
-│   │   │           │   └── config
-│   │   │           │       └── SQLiteConfig.java
 │   │   │           └── presentation
 │   │   │               └── controller
 │   │   │                   └── TodoController.java
@@ -64,7 +60,7 @@ java-todo-api
    ```
    mvn spring-boot:run
    ```
-   
+
 <!-- 1. Clone the repository:
    ```
    git clone <repository-url>

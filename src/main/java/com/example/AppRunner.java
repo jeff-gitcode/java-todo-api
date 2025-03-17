@@ -1,30 +1,30 @@
-package com.example;
+// package com.example;
 
-import java.util.List;
+// import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.boot.CommandLineRunner;
+// import org.springframework.stereotype.Component;
 
-import com.example.application.TodoService;
-import com.example.model.Todo;
+// import com.example.application.TodoService;
+// import com.example.model.Todo;
 
-@Component
-public class AppRunner implements CommandLineRunner {
+// @Component
+// public class AppRunner implements CommandLineRunner {
 	
-	@Autowired
-	TodoService todoService;
+// 	@Autowired
+// 	TodoService todoService;
 
-	@Override
-    public void run(String... args) throws Exception {
+// 	@Override
+//     public void run(String... args) throws Exception {
 		
-        Todo todo = new Todo();
-        todo.setTitle("Learn Spring Boot");
+//         Todo todo = new Todo();
+//         todo.setTitle("Learn Spring Boot");
         
-		todoService.createTodo(todo);
+// 		todoService.createTodo(todo);
 		
-		List<Todo> todos = todoService.getAllTodos();
-		todos.forEach((t) -> System.out.println(t.getTitle()));
-	}
+// 		List<Todo> todos = todoService.getAllTodos();
+// 		todos.forEach((t) -> System.out.println(t.getTitle()));
+// 	}
 
-}
+// }

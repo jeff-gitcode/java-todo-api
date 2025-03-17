@@ -3,10 +3,10 @@ package com.example.application;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.example.infrastructure.TodoRepository;
-import com.example.model.Todo;
 import org.springframework.stereotype.Service;
+
+import com.example.application.interfaces.TodoRepository;
+import com.example.domain.model.Todo;
 
 @Service
 public class TodoService {
