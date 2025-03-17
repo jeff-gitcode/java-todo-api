@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-// @Data
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
