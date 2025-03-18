@@ -19,6 +19,8 @@ java-todo-api
 │   └── workspace.xml
 ├── .qodo
 ├── api-client.http
+├── doc
+│   └── swagger.png
 ├── lib
 │   ├── angus-activation-2.0.0.jar
 │   ├── antlr4-runtime-4.13.0.jar
@@ -39,30 +41,41 @@ java-todo-api
 │   │   │   └── com
 │   │   │       └── example
 │   │   │           ├── application
+│   │   │           │   ├── auth
+│   │   │           │   │   └── JwtUtil.java
 │   │   │           │   ├── dto
 │   │   │           │   │   └── TodoDTO.java
 │   │   │           │   ├── interfaces
 │   │   │           │   │   ├── TodoRepository.java
 │   │   │           │   │   └── UserRepository.java
 │   │   │           │   ├── usecase
-│   │   │           │   │   ├── CreateTodoCommandHandler.java
-│   │   │           │   │   ├── DeleteTodoCommandHandler.java
-│   │   │           │   │   ├── GetAllTodosQueryHandler.java
-│   │   │           │   │   ├── GetTodoByIdQueryHandler.java
-│   │   │           │   │   └── UpdateTodoCommandHandler.java
-│   │   │           │   └── TodoService.java
+│   │   │           │   │   ├── auth
+│   │   │           │   │   │   ├── SigninUserQueryHandler.java
+│   │   │           │   │   │   └── SignupUserCommandHandler.java
+│   │   │           │   │   ├── command
+│   │   │           │   │   │   ├── CreateTodoCommandHandler.java
+│   │   │           │   │   │   ├── DeleteTodoCommandHandler.java
+│   │   │           │   │   │   └── UpdateTodoCommandHandler.java
+│   │   │           │   │   ├── query
+│   │   │           │   │   │   ├── GetAllTodosQueryHandler.java
+│   │   │           │   │   │   ├── GetTodoByIdQueryHandler.java
+│   │   │           │   │   │   └── SigninUserQuery.java
+│   │   │           │   │   └── TodoService.java
 │   │   │           ├── domain
 │   │   │           │   ├── command
 │   │   │           │   │   ├── CreateTodoCommand.java
 │   │   │           │   │   ├── DeleteTodoCommand.java
+│   │   │           │   │   ├── SignupUserCommand.java
 │   │   │           │   │   └── UpdateTodoCommand.java
 │   │   │           │   ├── model
-│   │   │           │   │   └── Todo.java
+│   │   │           │   │   ├── Todo.java
+│   │   │           │   │   └── User.java
 │   │   │           │   └── query
 │   │   │           │       ├── GetAllTodosQuery.java
 │   │   │           │       └── GetTodoByIdQuery.java
 │   │   │           ├── presentation
 │   │   │           │   └── controller
+│   │   │           │       ├── AuthController.java
 │   │   │           │       ├── HelloController.java
 │   │   │           │       └── TodoController.java
 │   │   │           └── App.java
@@ -111,24 +124,25 @@ java-todo-api
 - Uses SQLite for data persistence.
 - Follows Clean Architecture principles for better separation of concerns.
 - Implements CQRS for handling commands and queries separately.
+- JWT authentication for secure access to the API.
 
 ## Setup Instructions
 
 1. Clone the repository:
-   ```
+   ```sh
    git clone <repository-url>
    cd todo-api
    ```
 
 2. Build the project using Maven:
-   ```
+   ```sh
    mvn clean install
    or
    mvn dependency:purge-local-repository -DreResolve=true
    ```
 
 3. Run the application:
-   ```
+   ```sh
    mvn spring-boot:run
    or
    mvn org.springframework.boot:spring-boot-maven-plugin:run
@@ -164,11 +178,13 @@ This command will create a `todo.db` SQLite database file and execute the SQL st
 
 ## Usage
 
-- **Create a Todo**: Send a POST request to `/todos` with a JSON body containing `title`.
-- **Get All Todos**: Send a GET request to `/todos`.
-- **Get a Todo by ID**: Send a GET request to `/todos/{id}`.
-- **Update a Todo**: Send a PUT request to `/todos/{id}` with the updated JSON body.
-- **Delete a Todo**: Send a DELETE request to `/todos/{id}`.
+- **User Signup**: Send a POST request to `/auth/signup` with a JSON body containing `email` and `password`.
+- **User Signin**: Send a POST request to `/auth/signin` with a JSON body containing `email` and `password`. The response will include a JWT token.
+- **Create a Todo**: Send a POST request to `/todos` with a JSON body containing `title` and the `Authorization: Bearer {token}` header.
+- **Get All Todos**: Send a GET request to `/todos` with the `Authorization: Bearer {token}` header.
+- **Get a Todo by ID**: Send a GET request to `/todos/{id}` with the `Authorization: Bearer {token}` header.
+- **Update a Todo**: Send a PUT request to `/todos/{id}` with the updated JSON body and the `Authorization: Bearer {token}` header.
+- **Delete a Todo**: Send a DELETE request to `/todos/{id}` with the `Authorization: Bearer {token}` header.
 
 ## License
 
