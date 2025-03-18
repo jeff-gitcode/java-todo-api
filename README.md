@@ -137,6 +137,26 @@ java-todo-api
 
 5. Access Swagger UI for API documentation and testing at `http://localhost:8080/swagger-ui/index.html`.
 
+## Setting Up the Database
+
+To set up the SQLite database and create the necessary tables, you can use the provided `schema.sql` script. Follow these steps:
+
+1. Ensure you have SQLite installed on your machine. You can download it from [SQLite Download Page](https://www.sqlite.org/download.html).
+
+2. Navigate to the `src/main/resources` directory where the `schema.sql` file is located.
+
+3. Run the following command to create the database and tables:
+
+   ```sh
+   # cmd
+   sqlite3 todo.db < schema.sql
+
+   # ps
+   Get-Content schema.sql | sqlite3 todo.db
+   ```
+
+This command will create a `todo.db` SQLite database file and execute the SQL statements in the `schema.sql` file to create the necessary tables.
+
 ## Swagger UI
 
 ![Swagger UI](./doc/swagger.png)
