@@ -1,16 +1,15 @@
 package com.example.application.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
+// @Builder
 public class TodoDTO {
 
     private Integer id;
 
-    @NotBlank(message = "Email is mandatory")
+    @NotBlank(message = "Title is mandatory")
     private String title;
 
     public Integer getId() {
