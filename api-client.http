@@ -3,7 +3,7 @@ POST http://localhost:8080/todos
 Content-Type: application/json
 
 {
-  "title": "New Todo"
+  "title": ""
 }
 
 ### Get All Todos

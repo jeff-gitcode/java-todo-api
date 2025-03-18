@@ -3,7 +3,9 @@ package com.example.presentation.controller;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.application.dto.TodoDTO;
 import com.example.application.usecase.CreateTodoCommandHandler;
 import com.example.application.usecase.DeleteTodoCommandHandler;
 import com.example.application.usecase.GetAllTodosQueryHandler;
@@ -25,7 +28,9 @@ import com.example.domain.model.Todo;
 import com.example.domain.query.GetAllTodosQuery;
 import com.example.domain.query.GetTodoByIdQuery;
 
+
 @RestController
+@Validated
 @RequestMapping("/todos")
 public class TodoController {
 
@@ -60,7 +65,7 @@ public class TodoController {
     }
 
     @PostMapping
-    public Todo createTodo(@RequestBody Todo todo) {
+    public Todo createTodo(@Valid @RequestBody TodoDTO todo) {
         CreateTodoCommand command = new CreateTodoCommand(todo.getTitle());
 
         return createTodoCommandHandler.handle(command);
