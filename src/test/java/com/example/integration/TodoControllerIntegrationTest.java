@@ -1,40 +1,37 @@
 package com.example.integration;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.application.dto.TodoDTO;
 import com.example.application.interfaces.TodoRepository;
 import com.example.domain.model.Todo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TodoControllerIntegrationTest {
 
+    @LocalServerPort
+    private int port;
+
     @Autowired
-    private MockMvc mockMvc;
+    private TestRestTemplate restTemplate;
 
     @Autowired
     private TodoRepository todoRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp() {
@@ -42,7 +39,7 @@ public class TodoControllerIntegrationTest {
     }
 
     @Test
-    public void testGetAllTodos() throws Exception {
+    public void testGetAllTodos() {
         Todo todo1 = new Todo();
         todo1.setTitle("Todo 1");
         todoRepository.save(todo1);
@@ -51,37 +48,41 @@ public class TodoControllerIntegrationTest {
         todo2.setTitle("Todo 2");
         todoRepository.save(todo2);
 
-        mockMvc.perform(get("/todos"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value("Todo 1"))
-                .andExpect(jsonPath("$[1].title").value("Todo 2"));
+        ResponseEntity<Todo[]> response = restTemplate.getForEntity(createURLWithPort("/todos"), Todo[].class);
+        List<Todo> todos = Arrays.asList(response.getBody());
+
+        assertThat(todos).hasSize(2);
+        assertThat(todos.get(0).getTitle()).isEqualTo("Todo 1");
+        assertThat(todos.get(1).getTitle()).isEqualTo("Todo 2");
     }
 
     @Test
-    public void testGetTodoById() throws Exception {
+    public void testGetTodoById() {
         Todo todo = new Todo();
         todo.setTitle("Todo 1");
         todo = todoRepository.save(todo);
 
-        mockMvc.perform(get("/todos/" + todo.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Todo 1"));
+        ResponseEntity<Todo> response = restTemplate.getForEntity(createURLWithPort("/todos/" + todo.getId()), Todo.class);
+        Todo result = response.getBody();
+
+        assertThat(result).isNotNull();
+        assertThat(result.getTitle()).isEqualTo("Todo 1");
     }
 
     @Test
-    public void testCreateTodo() throws Exception {
+    public void testCreateTodo() {
         TodoDTO todoDTO = new TodoDTO();
         todoDTO.setTitle("New Todo");
 
-        mockMvc.perform(post("/todos")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(todoDTO)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("New Todo"));
+        ResponseEntity<Todo> response = restTemplate.postForEntity(createURLWithPort("/todos"), todoDTO, Todo.class);
+        Todo result = response.getBody();
+
+        assertThat(result).isNotNull();
+        assertThat(result.getTitle()).isEqualTo("New Todo");
     }
 
     @Test
-    public void testUpdateTodo() throws Exception {
+    public void testUpdateTodo() {
         Todo todo = new Todo();
         todo.setTitle("Old Todo");
         todo = todoRepository.save(todo);
@@ -89,29 +90,29 @@ public class TodoControllerIntegrationTest {
         TodoDTO todoDTO = new TodoDTO();
         todoDTO.setTitle("Updated Todo");
 
-        mockMvc.perform(put("/todos/" + todo.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(todoDTO)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Updated Todo"));
+        HttpEntity<TodoDTO> requestEntity = new HttpEntity<>(todoDTO);
+        ResponseEntity<Todo> response = restTemplate.exchange(createURLWithPort("/todos/" + todo.getId()), HttpMethod.PUT, requestEntity, Todo.class);
+        Todo result = response.getBody();
+
+        assertThat(result).isNotNull();
+        assertThat(result.getTitle()).isEqualTo("Updated Todo");
     }
 
     @Test
-    public void testDeleteTodo() throws Exception {
+    public void testDeleteTodo() {
         Todo todo = new Todo();
         todo.setTitle("Todo to be deleted");
         todo = todoRepository.save(todo);
 
-        mockMvc.perform(delete("/todos/" + todo.getId()))
-                .andExpect(status().isOk());
+        restTemplate.delete(createURLWithPort("/todos/" + todo.getId()));
 
-                    // Verify that the todo has been deleted
-        boolean exists = todoRepository.existsById(todo.getId());
-        assertFalse(exists, "Todo should be deleted");
+        ResponseEntity<Todo> response = restTemplate.getForEntity(createURLWithPort("/todos/" + todo.getId()), Todo.class);
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
 
-        // Verify that the todo is not found, but it is optional
-        mockMvc.perform(get("/todos/" + todo.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").doesNotExist());
+        assertThat(response.getBody()).isNull();
+    }
+
+    private String createURLWithPort(String uri) {
+        return "http://localhost:" + port + uri;
     }
 }

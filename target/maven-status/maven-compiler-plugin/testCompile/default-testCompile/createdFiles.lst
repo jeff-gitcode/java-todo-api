@@ -8,4 +8,5 @@ com\example\application\usecase\DeleteTodoCommandHandlerTest.class
 com\example\application\usecase\GetAllTodosQueryHandlerTest.class
 com\example\integration\TodoControllerIntegrationTest.class
 com\example\application\dto\TodoDTOTest.class
+com\example\integration\TodoController1IntegrationTest.class
 com\example\AppTest.class

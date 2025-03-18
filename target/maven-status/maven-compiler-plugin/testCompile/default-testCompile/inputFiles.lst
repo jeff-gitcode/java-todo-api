@@ -6,6 +6,7 @@ D:\dev\java\git\java-todo-api\src\test\java\com\example\application\usecase\comm
 D:\dev\java\git\java-todo-api\src\test\java\com\example\application\usecase\query\GetAllTodosQueryHandlerTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\application\usecase\query\GetTodoByIdQueryHandlerTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\AppTest.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\integration\TodoController1IntegrationTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\integration\TodoControllerIntegrationTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\presentation\controller\TodoController2Test.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\presentation\controller\TodoControllerTest.java
