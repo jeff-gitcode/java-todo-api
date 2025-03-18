@@ -1,4 +1,4 @@
-# Java 23 Todo API
+# Java Todo API
 
 This project is a Todo API built using Java 23, Spring Boot, and SQLite, following the Clean Architecture principles and implementing the CQRS pattern.
 
@@ -6,24 +6,65 @@ This project is a Todo API built using Java 23, Spring Boot, and SQLite, followi
 
 ```
 java-todo-api
+├── .gitignore
+├── .idea
+│   ├── .gitignore
+│   ├── compiler.xml
+│   ├── encodings.xml
+│   ├── httpRequests
+│   ├── jarRepositories.xml
+│   ├── libraries
+│   ├── misc.xml
+│   ├── vcs.xml
+│   └── workspace.xml
+├── .qodo
+├── api-client.http
+├── lib
+│   ├── angus-activation-2.0.0.jar
+│   ├── antlr4-runtime-4.13.0.jar
+│   ├── apiguardian-api-1.1.2.jar
+│   ├── byte-buddy-1.14.15.jar
+│   ├── byte-buddy-1.15.0.jar
+│   ├── byte-buddy-agent-1.14.15.jar
+│   ├── byte-buddy-agent-1.15.0.jar
+│   ├── classmate-1.5.1.jar
+│   ├── hamcrest-core-1.3.jar
+│   ├── hibernate-commons-annotations-6.0.6.Final.jar
+│   └── ...
+├── pom.xml
+├── README.md
 ├── src
 │   ├── main
 │   │   ├── java
 │   │   │   └── com
 │   │   │       └── example
 │   │   │           ├── application
+│   │   │           │   ├── dto
+│   │   │           │   │   └── TodoDTO.java
+│   │   │           │   ├── interfaces
+│   │   │           │   │   └── TodoRepository.java
+│   │   │           │   ├── usecase
+│   │   │           │   │   ├── CreateTodoCommandHandler.java
+│   │   │           │   │   ├── DeleteTodoCommandHandler.java
+│   │   │           │   │   ├── GetAllTodosQueryHandler.java
+│   │   │           │   │   ├── GetTodoByIdQueryHandler.java
+│   │   │           │   │   └── UpdateTodoCommandHandler.java
 │   │   │           │   └── TodoService.java
 │   │   │           ├── domain
+│   │   │           │   ├── command
+│   │   │           │   │   ├── CreateTodoCommand.java
+│   │   │           │   │   ├── DeleteTodoCommand.java
+│   │   │           │   │   └── UpdateTodoCommand.java
 │   │   │           │   ├── model
 │   │   │           │   │   └── Todo.java
-│   │   │           │   ├── repository
-│   │   │           │   │   └── TodoRepository.java
-│   │   │           │   └── command
-│   │   │           │       └── CreateTodoCommand.java
-│   │   │           ├── infrastructure
-│   │   │           └── presentation
-│   │   │               └── controller
-│   │   │                   └── TodoController.java
+│   │   │           │   └── query
+│   │   │           │       ├── GetAllTodosQuery.java
+│   │   │           │       └── GetTodoByIdQuery.java
+│   │   │           ├── presentation
+│   │   │           │   └── controller
+│   │   │           │       ├── HelloController.java
+│   │   │           │       └── TodoController.java
+│   │   │           └── App.java
 │   │   └── resources
 │   │       ├── application.properties
 │   │       └── schema.sql
@@ -31,9 +72,36 @@ java-todo-api
 │       └── java
 │           └── com
 │               └── example
-│                   └── TodoServiceTest.java
-├── pom.xml
-└── README.md
+│                   ├── application
+│                   │   ├── dto
+│                   │   │   └── TodoDTOTest.java
+│                   │   ├── service
+│                   │   │   └── TodoServiceTest.java
+│                   │   └── usecase
+│                   │       ├── command
+│                   │       │   ├── CreateTodoCommandHandlerTest.java
+│                   │       │   ├── DeleteTodoCommandHandlerTest.java
+│                   │       │   └── UpdateTodoCommandHandlerTest.java
+│                   │       └── query
+│                   │           ├── GetAllTodosQueryHandlerTest.java
+│                   │           └── GetTodoByIdQueryHandlerTest.java
+│                   ├── integration
+│                   │   ├── TodoController1IntegrationTest.java
+│                   │   ├── TodoControllerIntegrationTest.java
+│                   │   └── TodoServiceIntegrationTest.java
+│                   └── presentation
+│                       └── controller
+│                           ├── TodoController2Test.java
+│                           └── TodoControllerTest.java
+├── target
+│   ├── classes
+│   ├── generated-sources
+│   ├── generated-test-sources
+│   ├── maven-archiver
+│   ├── maven-status
+│   ├── surefire-reports
+│   └── test-classes
+└── ...
 ```
 
 ## Features
@@ -69,43 +137,9 @@ java-todo-api
 
 5. Access Swagger UI for API documentation and testing at `http://localhost:8080/swagger-ui/index.html`.
 
-<!-- 1. Clone the repository:
-   ```
-   git clone <repository-url>
-   cd java23-todo-api
-   ```
-
-2. Build the project using Gradle:
-
-- Create Gradle Wrapper - gradlew.bat
-   ```
-   gradle wrapper
-   ```
-   
-- On Unix-based systems:
-  ```
-  ./gradlew build
-  ```
-- On Windows:
-  ```
-  gradlew.bat build
-  ``` -->
-
-3. Run the application:
-- On Unix-based systems:
-  ```
-  ./gradlew bootRun
-  ```
-- On Windows:
-  ```
-  gradlew.bat bootRun
-  ```
-
-4. Access the API at `http://localhost:8080/todos`.
-
 ## Usage
 
-- **Create a Todo**: Send a POST request to `/todos` with a JSON body containing `title` and `description`.
+- **Create a Todo**: Send a POST request to `/todos` with a JSON body containing `title`.
 - **Get All Todos**: Send a GET request to `/todos`.
 - **Get a Todo by ID**: Send a GET request to `/todos/{id}`.
 - **Update a Todo**: Send a PUT request to `/todos/{id}` with the updated JSON body.
