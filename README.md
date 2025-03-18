@@ -137,6 +137,10 @@ java-todo-api
 
 5. Access Swagger UI for API documentation and testing at `http://localhost:8080/swagger-ui/index.html`.
 
+## Swagger UI
+
+![Swagger UI](./doc/swagger.png)
+
 ## Usage
 
 - **Create a Todo**: Send a POST request to `/todos` with a JSON body containing `title`.
