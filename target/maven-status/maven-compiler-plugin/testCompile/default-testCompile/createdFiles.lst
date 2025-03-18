@@ -6,5 +6,6 @@ com\example\application\usecase\UpdateTodoCommandHandlerTest.class
 com\example\application\usecase\CreateTodoCommandHandlerTest.class
 com\example\application\usecase\DeleteTodoCommandHandlerTest.class
 com\example\application\usecase\GetAllTodosQueryHandlerTest.class
+com\example\integration\TodoControllerIntegrationTest.class
 com\example\application\dto\TodoDTOTest.class
 com\example\AppTest.class
