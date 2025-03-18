@@ -10,30 +10,33 @@ import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
 import com.example.application.interfaces.TodoRepository;
+import com.example.domain.command.UpdateTodoCommand;
 import com.example.domain.model.Todo;
-import com.example.domain.query.GetTodoByIdQuery;
 
-public class GetTodoByIdQueryHandlerTest {
+public class UpdateTodoCommandHandlerUnitTest {
 
     @Mock
     private TodoRepository todoRepository;
 
     @InjectMocks
-    private GetTodoByIdQueryHandler getTodoByIdQueryHandler;
+    private UpdateTodoCommandHandler updateTodoCommandHandler;
 
-    public GetTodoByIdQueryHandlerTest() {
+    public UpdateTodoCommandHandlerUnitTest() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     public void testHandle() {
         Todo todo = new Todo();
-        todo.setTitle("Todo 1");
+        todo.setTitle("Old Todo");
 
         when(todoRepository.findById(1)).thenReturn(Optional.of(todo));
 
-        GetTodoByIdQuery query = new GetTodoByIdQuery(1);
-        Optional<Todo> result = getTodoByIdQueryHandler.handle(query);
-        assertEquals("Todo 1", result.get().getTitle());
+        UpdateTodoCommand command = new UpdateTodoCommand(1, "Updated Todo");
+
+        when(todoRepository.save(todo)).thenReturn(todo);
+
+        Todo result = updateTodoCommandHandler.handle(command);
+        assertEquals("Updated Todo", result.getTitle());
     }
 }

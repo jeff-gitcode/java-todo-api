@@ -15,7 +15,7 @@ import com.example.application.TodoService;
 import com.example.application.interfaces.TodoRepository;
 import com.example.domain.model.Todo;
 
-public class TodoServiceTest {
+public class TodoServiceUnitTest {
 
     @Mock
     private TodoRepository todoRepository;

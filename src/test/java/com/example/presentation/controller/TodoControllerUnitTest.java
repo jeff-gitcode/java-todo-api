@@ -29,7 +29,7 @@ import com.example.domain.query.GetTodoByIdQuery;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(TodoController.class)
-public class TodoControllerTest {
+public class TodoControllerUnitTest {
 
     @Autowired
     private MockMvc mockMvc;

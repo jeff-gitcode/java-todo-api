@@ -9,7 +9,7 @@ import org.mockito.MockitoAnnotations;
 import com.example.application.interfaces.TodoRepository;
 import com.example.domain.command.DeleteTodoCommand;
 
-public class DeleteTodoCommandHandlerTest {
+public class DeleteTodoCommandHandlerUnitTest {
 
     @Mock
     private TodoRepository todoRepository;
@@ -17,7 +17,7 @@ public class DeleteTodoCommandHandlerTest {
     @InjectMocks
     private DeleteTodoCommandHandler deleteTodoCommandHandler;
 
-    public DeleteTodoCommandHandlerTest() {
+    public DeleteTodoCommandHandlerUnitTest() {
         MockitoAnnotations.openMocks(this);
     }
 

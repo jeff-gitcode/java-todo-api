@@ -13,7 +13,7 @@ import com.example.application.interfaces.TodoRepository;
 import com.example.domain.command.CreateTodoCommand;
 import com.example.domain.model.Todo;
 
-public class CreateTodoCommandHandlerTest {
+public class CreateTodoCommandHandlerUnitTest {
 
     @Mock
     private TodoRepository todoRepository;

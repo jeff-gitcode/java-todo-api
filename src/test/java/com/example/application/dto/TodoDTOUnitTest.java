@@ -10,7 +10,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
-public class TodoDTOTest {
+public class TodoDTOUnitTest {
 
     private static Validator validator;
 

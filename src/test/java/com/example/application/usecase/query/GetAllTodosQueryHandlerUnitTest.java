@@ -14,7 +14,7 @@ import com.example.application.interfaces.TodoRepository;
 import com.example.domain.model.Todo;
 import com.example.domain.query.GetAllTodosQuery;
 
-public class GetAllTodosQueryHandlerTest {
+public class GetAllTodosQueryHandlerUnitTest {
 
     @Mock
     private TodoRepository todoRepository;
@@ -22,7 +22,7 @@ public class GetAllTodosQueryHandlerTest {
     @InjectMocks
     private GetAllTodosQueryHandler getAllTodosQueryHandler;
 
-    public GetAllTodosQueryHandlerTest() {
+    public GetAllTodosQueryHandlerUnitTest() {
         MockitoAnnotations.openMocks(this);
     }
 

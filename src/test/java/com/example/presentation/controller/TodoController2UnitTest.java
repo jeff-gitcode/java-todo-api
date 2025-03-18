@@ -27,7 +27,7 @@ import com.example.domain.query.GetAllTodosQuery;
 import com.example.domain.query.GetTodoByIdQuery;
 
 @ExtendWith(MockitoExtension.class)
-public class TodoController2Test {
+public class TodoController2UnitTest {
 
     @InjectMocks
     private TodoController todoController;
