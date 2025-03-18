@@ -3,7 +3,6 @@ package com.example.presentation.controller;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +26,8 @@ import com.example.domain.command.UpdateTodoCommand;
 import com.example.domain.model.Todo;
 import com.example.domain.query.GetAllTodosQuery;
 import com.example.domain.query.GetTodoByIdQuery;
+
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -72,7 +73,7 @@ public class TodoController {
     }
     
     @PutMapping("/{id}")
-    public Todo updateTodo(@PathVariable Long id, @RequestBody Todo todo) {
+    public Todo updateTodo(@PathVariable Long id, @Valid @RequestBody TodoDTO todo) {
         UpdateTodoCommand command = new UpdateTodoCommand(id, todo.getTitle());
         return updateTodoCommandHandler.handle(command);
     }    
