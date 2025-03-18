@@ -1,13 +1,13 @@
 package com.example.domain.command;
 
 public class DeleteTodoCommand {
-    private final Long id;
+    private final Integer id;
 
-    public DeleteTodoCommand(Long id) {
+    public DeleteTodoCommand(Integer id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 }

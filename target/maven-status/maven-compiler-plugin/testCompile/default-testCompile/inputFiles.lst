@@ -1,1 +1,9 @@
+D:\dev\java\git\java-todo-api\src\test\java\com\example\application\service\TodoServiceTest.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\application\usecase\command\CreateTodoCommandHandlerTest.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\application\usecase\command\DeleteTodoCommandHandlerTest.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\application\usecase\command\UpdateTodoCommandHandlerTest.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\application\usecase\query\GetAllTodosQueryHandlerTest.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\application\usecase\query\GetTodoByIdQueryHandlerTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\AppTest.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\presentation\controller\TodoController2Test.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\presentation\controller\TodoControllerTest.java

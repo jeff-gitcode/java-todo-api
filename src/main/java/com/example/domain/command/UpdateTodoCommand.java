@@ -1,15 +1,15 @@
 package com.example.domain.command;
 
 public class UpdateTodoCommand {
-    private final Long id;
+    private final Integer id;
     private final String title;
 
-    public UpdateTodoCommand(Long id, String title) {
+    public UpdateTodoCommand(Integer id, String title) {
         this.id = id;
         this.title = title;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

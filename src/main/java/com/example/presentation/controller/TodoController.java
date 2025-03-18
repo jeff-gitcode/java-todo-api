@@ -54,13 +54,13 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Todo> getTodoById(@PathVariable Long id) {
+    public Optional<Todo> getTodoById(@PathVariable Integer id) {
         GetTodoByIdQuery query = new GetTodoByIdQuery(id);
         return getTodoByIdQueryHandler.handle(query);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTodoById(@PathVariable Long id) {
+    public void deleteTodoById(@PathVariable Integer id) {
         DeleteTodoCommand command = new DeleteTodoCommand(id);
         deleteTodoCommandHandler.handle(command);
     }
@@ -73,7 +73,7 @@ public class TodoController {
     }
     
     @PutMapping("/{id}")
-    public Todo updateTodo(@PathVariable Long id, @Valid @RequestBody TodoDTO todo) {
+    public Todo updateTodo(@PathVariable Integer id, @Valid @RequestBody TodoDTO todo) {
         UpdateTodoCommand command = new UpdateTodoCommand(id, todo.getTitle());
         return updateTodoCommandHandler.handle(command);
     }    

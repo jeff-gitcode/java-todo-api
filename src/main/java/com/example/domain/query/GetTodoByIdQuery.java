@@ -1,13 +1,13 @@
 package com.example.domain.query;
 
 public class GetTodoByIdQuery {
-    private final Long id;
+    private final Integer id;
 
-    public GetTodoByIdQuery(Long id) {
+    public GetTodoByIdQuery(Integer id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 }
