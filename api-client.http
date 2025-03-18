@@ -1,20 +1,47 @@
+@token=123
+
+### User Signup
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+
+### User Signin
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+
+### Extract the token from the signin response
+
 ### Create a Todo
 POST http://localhost:8080/todos
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "title": "New Todo"
 }
 
+
 ### Get All Todos
 GET http://localhost:8080/todos
+Authorization: Bearer {{token}}
 
 ### Get a Todo by ID
 GET http://localhost:8080/todos/3
+Authorization: Bearer {{token}}
 
 ### Update a Todo
 PUT http://localhost:8080/todos/6
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "title": "Update Todo"
@@ -22,3 +49,4 @@ Content-Type: application/json
 
 ### Delete a Todo
 DELETE http://localhost:8080/todos/3
+Authorization: Bearer {{token}}

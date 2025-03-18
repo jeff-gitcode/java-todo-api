@@ -1,9 +1,11 @@
-package com.example.application.usecase;
+package com.example.application.usecase.query;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.example.application.usecase.todo.GetAllTodosQueryHandler;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

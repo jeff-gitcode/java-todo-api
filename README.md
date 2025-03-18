@@ -42,7 +42,8 @@ java-todo-api
 │   │   │           │   ├── dto
 │   │   │           │   │   └── TodoDTO.java
 │   │   │           │   ├── interfaces
-│   │   │           │   │   └── TodoRepository.java
+│   │   │           │   │   ├── TodoRepository.java
+│   │   │           │   │   └── UserRepository.java
 │   │   │           │   ├── usecase
 │   │   │           │   │   ├── CreateTodoCommandHandler.java
 │   │   │           │   │   ├── DeleteTodoCommandHandler.java

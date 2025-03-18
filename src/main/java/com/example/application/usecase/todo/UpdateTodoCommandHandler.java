@@ -1,7 +1,4 @@
-package com.example.application.usecase;
-
-import com.example.domain.command.UpdateTodoCommand;
-import com.example.domain.model.Todo;
+package com.example.application.usecase.todo;
 
 import java.util.Optional;
 
@@ -9,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.application.interfaces.TodoRepository;
+import com.example.domain.command.UpdateTodoCommand;
+import com.example.domain.model.Todo;
 
 @Component
 public class UpdateTodoCommandHandler {

@@ -1,4 +1,4 @@
-package com.example.application.usecase;
+package com.example.application.usecase.todo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

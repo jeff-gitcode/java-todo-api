@@ -1,5 +1,6 @@
-package com.example.application.usecase;
+package com.example.application.usecase.command;
 
+import com.example.application.usecase.todo.DeleteTodoCommandHandler;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

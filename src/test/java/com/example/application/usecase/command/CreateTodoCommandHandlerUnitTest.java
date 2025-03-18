@@ -1,6 +1,8 @@
-package com.example.application.usecase;
+package com.example.application.usecase.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.example.application.usecase.todo.CreateTodoCommandHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;

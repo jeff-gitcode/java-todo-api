@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.application.dto.TodoDTO;
-import com.example.application.usecase.CreateTodoCommandHandler;
-import com.example.application.usecase.DeleteTodoCommandHandler;
-import com.example.application.usecase.GetAllTodosQueryHandler;
-import com.example.application.usecase.GetTodoByIdQueryHandler;
-import com.example.application.usecase.UpdateTodoCommandHandler;
+import com.example.application.usecase.todo.CreateTodoCommandHandler;
+import com.example.application.usecase.todo.DeleteTodoCommandHandler;
+import com.example.application.usecase.todo.GetAllTodosQueryHandler;
+import com.example.application.usecase.todo.GetTodoByIdQueryHandler;
+import com.example.application.usecase.todo.UpdateTodoCommandHandler;
 import com.example.domain.command.CreateTodoCommand;
 import com.example.domain.command.DeleteTodoCommand;
 import com.example.domain.command.UpdateTodoCommand;
