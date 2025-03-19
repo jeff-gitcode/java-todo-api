@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQyMzYzNDE3LCJleHAiOjE3NDIzNjcwMTd9.IsOLhO_SIXnMZZXO-0pKPLEJbSbgYf2iMKPQTZUdzYvFoK1f3ePMKT6vr82ESxOheqZQ6rrEm5ZY0g0ewgZJ2A
+@token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQyMzY1MDY5LCJleHAiOjE3NDIzNjg2Njl9.7vJvyl_0AIr4LnOTIlj27AKTUTbBXPey4bvutWl1gOY_nGnNJBY-uQjiRJ4A5vc1aNq0Qe2QyrhmVXvUuD3ppA
 
 ### User Signup
 POST http://localhost:8080/auth/signup
@@ -35,11 +35,11 @@ GET http://localhost:8080/todos
 Authorization: Bearer {{token}}
 
 ### Get a Todo by ID
-GET http://localhost:8080/todos/34
+GET http://localhost:8080/todos/1
 Authorization: Bearer {{token}}
 
 ### Update a Todo
-PUT http://localhost:8080/todos/34
+PUT http://localhost:8080/todos/1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -48,5 +48,5 @@ Authorization: Bearer {{token}}
 }
 
 ### Delete a Todo
-DELETE http://localhost:8080/todos/34
+DELETE http://localhost:8080/todos/3
 Authorization: Bearer {{token}}
