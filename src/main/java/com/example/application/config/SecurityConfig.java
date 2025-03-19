@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.application.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,16 +12,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.application.auth.AuthEntryPointJwt;
+import com.example.application.auth.JwtRequestFilter;
 import com.example.application.service.CustomUserDetailsService;
+
 @Configuration
-public class WebSecurityConfig {
+public class SecurityConfig {
     @Autowired
     CustomUserDetailsService userDetailsService;
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
     @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter();
+    public JwtRequestFilter authenticationJwtTokenFilter() {
+        return new JwtRequestFilter();
     }
     @Bean
     public AuthenticationManager authenticationManager(

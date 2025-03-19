@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.application.auth;
 
 import java.io.IOException;
 
@@ -10,7 +10,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.example.application.auth.JwtUtil;
 import com.example.application.service.CustomUserDetailsService;
 
 import jakarta.servlet.FilterChain;
@@ -18,7 +17,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 @Component
-public class AuthTokenFilter extends OncePerRequestFilter {
+public class JwtRequestFilter extends OncePerRequestFilter{
     @Autowired
     private JwtUtil jwtUtils;
     @Autowired

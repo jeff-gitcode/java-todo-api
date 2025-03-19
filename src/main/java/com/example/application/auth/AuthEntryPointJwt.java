@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.application.auth;
 
 import java.io.IOException;
 
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 @Component
 public class AuthEntryPointJwt  implements AuthenticationEntryPoint {
     @Override
