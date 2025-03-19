@@ -1,8 +1,10 @@
 D:\dev\java\git\java-todo-api\src\main\java\com\example\App.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\auth\JwtUtil.java
+D:\dev\java\git\java-todo-api\src\main\java\com\example\application\auth\JwtUtil2.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\dto\TodoDTO.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\interfaces\TodoRepository.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\interfaces\UserRepository.java
+D:\dev\java\git\java-todo-api\src\main\java\com\example\application\service\CustomUserDetailsService.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\TodoService.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\auth\SigninUserQueryHandler.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\auth\SignupUserCommandHandler.java
@@ -12,7 +14,11 @@ D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\todo
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\todo\GetTodoByIdQueryHandler.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\todo\UpdateTodoCommandHandler.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\AppRunner.java
+D:\dev\java\git\java-todo-api\src\main\java\com\example\config\AuthEntryPointJwt.java
+D:\dev\java\git\java-todo-api\src\main\java\com\example\config\AuthTokenFilter.java
+D:\dev\java\git\java-todo-api\src\main\java\com\example\config\JwtRequestFilter.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\config\SecurityConfig.java
+D:\dev\java\git\java-todo-api\src\main\java\com\example\config\WebSecurityConfig.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\domain\command\CreateTodoCommand.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\domain\command\DeleteTodoCommand.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\domain\command\SignupUserCommand.java
