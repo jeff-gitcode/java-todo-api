@@ -45,7 +45,12 @@ public class JwtRequestFilter extends OncePerRequestFilter{
         } catch (Exception e) {
             System.out.println("Cannot set user authentication: " + e);
         }
-        filterChain.doFilter(request, response);
+
+        try {
+            filterChain.doFilter(request, response);            
+        } catch (Exception e) {
+            System.out.println("Cannot set user authentication: " + e);
+        }
     }
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");

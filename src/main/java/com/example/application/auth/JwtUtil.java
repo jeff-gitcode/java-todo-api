@@ -2,14 +2,12 @@ package com.example.application.auth;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -53,23 +51,6 @@ public class JwtUtil {
                 .getBody()
                 .getSubject();
     }
-
-    private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(this.jwtSecret).parseClaimsJws(token).getBody();
-    }
-
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
-
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
     
     // Validate JWT token
     public boolean validateJwtToken(String token) {
@@ -86,6 +67,8 @@ public class JwtUtil {
             System.out.println("JWT token is unsupported: " + e.getMessage());
         } catch (IllegalArgumentException e) {
             System.out.println("JWT claims string is empty: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("JWT token is invalid: " + e.getMessage());
         }
         return false;
     }

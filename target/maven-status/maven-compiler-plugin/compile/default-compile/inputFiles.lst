@@ -10,7 +10,7 @@ D:\dev\java\git\java-todo-api\src\main\java\com\example\application\dto\TodoDTO.
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\interfaces\TodoRepository.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\interfaces\UserRepository.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\service\CustomUserDetailsService.java
-D:\dev\java\git\java-todo-api\src\main\java\com\example\application\TodoService.java
+D:\dev\java\git\java-todo-api\src\main\java\com\example\application\service\TodoService.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\auth\SigninUserQueryHandler.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\auth\SignupUserCommandHandler.java
 D:\dev\java\git\java-todo-api\src\main\java\com\example\application\usecase\todo\CreateTodoCommandHandler.java

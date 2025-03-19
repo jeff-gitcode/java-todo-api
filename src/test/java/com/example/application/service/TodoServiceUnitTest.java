@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
-import com.example.application.TodoService;
 import com.example.application.interfaces.TodoRepository;
 import com.example.domain.model.Todo;
 
@@ -22,10 +21,6 @@ public class TodoServiceUnitTest {
 
     @InjectMocks
     private TodoService todoService;
-
-    // public TodoServiceTest() {
-    //     MockitoAnnotations.openMocks(this);
-    // }
 
     @BeforeEach
     public void Setup() {

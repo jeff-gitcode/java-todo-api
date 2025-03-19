@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.application.dto.TodoDTO;
@@ -53,6 +54,7 @@ public class TodoControllerUnitTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @WithMockUser(username = "test@example.com", roles = {"USER"})
     public void testGetAllTodos() throws Exception {
         Todo todo1 = new Todo();
         todo1.setTitle("Todo 1");
@@ -62,7 +64,8 @@ public class TodoControllerUnitTest {
 
         when(getAllTodosQueryHandler.handle(any(GetAllTodosQuery.class))).thenReturn(Arrays.asList(todo1, todo2));
 
-        mockMvc.perform(get("/todos"))
+        mockMvc.perform(get("/todos")
+                        .header("Authorization", "Bearer valid.jwt.token"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Todo 1"))
                 .andExpect(jsonPath("$[1].title").value("Todo 2"));

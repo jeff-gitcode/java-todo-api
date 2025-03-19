@@ -1,4 +1,5 @@
-D:\dev\java\git\java-todo-api\src\test\java\com\example\application\config\SecurityConfigTest.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\application\auth\JwtRequestFilterUnitTest.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\application\auth\JwtUtilUnitTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\application\dto\TodoDTOUnitTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\application\service\TodoServiceUnitTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\application\usecase\command\CreateTodoCommandHandlerUnitTest.java
@@ -9,5 +10,6 @@ D:\dev\java\git\java-todo-api\src\test\java\com\example\application\usecase\quer
 D:\dev\java\git\java-todo-api\src\test\java\com\example\AppUnitTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\integration\TodoController1IntegrationTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\integration\TodoControllerIntegrationTest.java
+D:\dev\java\git\java-todo-api\src\test\java\com\example\presentation\controller\AuthControllerUnitTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\presentation\controller\TodoController2UnitTest.java
 D:\dev\java\git\java-todo-api\src\test\java\com\example\presentation\controller\TodoControllerUnitTest.java
