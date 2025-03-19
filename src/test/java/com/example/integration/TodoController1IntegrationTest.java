@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -42,6 +43,7 @@ public class TodoController1IntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testGetAllTodos() throws Exception {
         Todo todo1 = new Todo();
         todo1.setTitle("Todo 1");
@@ -58,6 +60,7 @@ public class TodoController1IntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testGetTodoById() throws Exception {
         Todo todo = new Todo();
         todo.setTitle("Todo 1");
@@ -69,6 +72,7 @@ public class TodoController1IntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testCreateTodo() throws Exception {
         TodoDTO todoDTO = new TodoDTO();
         todoDTO.setTitle("New Todo");
@@ -81,6 +85,7 @@ public class TodoController1IntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testUpdateTodo() throws Exception {
         Todo todo = new Todo();
         todo.setTitle("Old Todo");
@@ -97,6 +102,7 @@ public class TodoController1IntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testDeleteTodo() throws Exception {
         Todo todo = new Todo();
         todo.setTitle("Todo to be deleted");
