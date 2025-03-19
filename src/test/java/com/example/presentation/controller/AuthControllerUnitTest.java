@@ -11,6 +11,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.ResponseEntity;
 
 import com.example.application.usecase.auth.SigninUserQueryHandler;
 import com.example.application.usecase.auth.SignupUserCommandHandler;
@@ -44,11 +45,12 @@ class AuthControllerUnitTest {
         when(signupUserCommandHandler.handle(command)).thenReturn("User registered successfully");
 
         // Act
-        String response = authController.signup(command);
+        ResponseEntity<String> response = authController.signup(command);
 
         // Assert
-        assertEquals("User registered successfully", response);
-        verify(signupUserCommandHandler, times(1)).handle(command);
+        assertEquals(200, response.getStatusCodeValue()); // Verify HTTP status code
+        assertEquals("User registered successfully", response.getBody()); // Verify response body
+        verify(signupUserCommandHandler, times(1)).handle(command); // Verify handler was called
     }
 
     @Test

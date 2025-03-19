@@ -1,6 +1,8 @@
 com\example\application\auth\JwtUtilUnitTest.class
 com\example\application\usecase\command\UpdateTodoCommandHandlerUnitTest.class
 com\example\application\dto\TodoDTOUnitTest.class
+com\example\integration\AuthControllerIntegrationTest.class
+com\example\integration\AuthControllerIntegrationTest$SignupRequest.class
 com\example\integration\TodoController1IntegrationTest.class
 com\example\presentation\controller\AuthControllerUnitTest.class
 com\example\application\usecase\command\CreateTodoCommandHandlerUnitTest.class
@@ -13,3 +15,4 @@ com\example\application\usecase\query\GetTodoByIdQueryHandlerUnitTest.class
 com\example\application\usecase\query\GetAllTodosQueryHandlerUnitTest.class
 com\example\integration\TodoControllerIntegrationTest.class
 com\example\presentation\controller\TodoController2UnitTest.class
+com\example\integration\AuthControllerIntegrationTest$SigninRequest.class
