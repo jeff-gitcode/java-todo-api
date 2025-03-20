@@ -9,12 +9,13 @@
 ################################################################################
 
 # Create a stage for resolving and downloading dependencies.
-FROM eclipse-temurin:21-jdk-jammy as deps
+FROM eclipse-temurin:17-jdk-jammy as deps
 
 WORKDIR /build
 
 # Copy the mvnw wrapper with executable permissions.
 COPY --chmod=0755 mvnw mvnw
+COPY --chmod=666 todo.db todo.db
 COPY .mvn/ .mvn/
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
@@ -36,6 +37,7 @@ FROM deps as package
 WORKDIR /build
 
 COPY ./src src/
+COPY --chmod=666 todo.db todo.db
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 \
     ./mvnw package -DskipTests && \
@@ -62,11 +64,11 @@ RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/e
 # from the install stage.
 #
 # The example below uses eclipse-turmin's JRE image as the foundation for running the app.
-# By specifying the "23-jre-jammy" tag, it will also use whatever happens to be the
+# By specifying the "17-jre-jammy" tag, it will also use whatever happens to be the
 # most recent version of that tag when you build your Dockerfile.
 # If reproducibility is important, consider using a specific digest SHA, like
 # eclipse-temurin@sha256:99cede493dfd88720b610eb8077c8688d3cca50003d76d1d539b0efc8cca72b4.
-FROM eclipse-temurin:21-jre-jammy AS final
+FROM eclipse-temurin:17-jre-jammy AS final
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/

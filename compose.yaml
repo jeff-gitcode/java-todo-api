@@ -9,7 +9,6 @@
 # https://github.com/docker/awesome-compose
 services:
   server:
-    container_name: java-todo-api-server # Add a name to the service
     build:
       context: .
     ports:
@@ -47,3 +46,4 @@ services:
 # secrets:
 #   db-password:
 #     file: db/password.txt
+
