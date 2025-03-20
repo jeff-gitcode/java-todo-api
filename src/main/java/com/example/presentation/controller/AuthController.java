@@ -27,20 +27,12 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@Valid @RequestBody SignupUserCommand command) {
         // if exception return bad request
-        try {
-                var result = signupUserCommandHandler.handle(command);
-                return ResponseEntity.ok(result);
-            } catch (Exception e) {
-                return ResponseEntity.badRequest().body(e.getMessage());
-            }
+        var result = signupUserCommandHandler.handle(command);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/signin")
     public ResponseEntity<String> signin(@RequestBody SigninUserQuery query) {
-        try {
             return ResponseEntity.ok(signinUserQueryHandler.handle(query));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 }

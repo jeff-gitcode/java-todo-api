@@ -78,7 +78,7 @@ public class AuthControllerIntegrationTest {
         User user = new User();
         user.setEmail("test@example.com");
         user.setPassword("$2a$10$D9Q9Q9Q9Q9Q9Q9Q9Q9Q9QO"); // bcrypt-encoded password for "password123"
-        userRepository.save(user);
+        userRepository.save(user); // Save the user to the database
 
         String signinRequest = objectMapper.writeValueAsString(new SigninRequest("test@example.com", "password123"));
 

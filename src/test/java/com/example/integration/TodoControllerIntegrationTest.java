@@ -91,15 +91,28 @@ public class TodoControllerIntegrationTest {
 
     @Test
     public void testGetTodoById() {
+        // Arrange
         Todo todo = new Todo();
-        todo.setTitle("Todo 1");
-        todo = todoRepository.save(todo);
+        todo.setTitle("Sample Todo");
+        todo = todoRepository.save(todo); // Save the Todo and get the generated ID
 
-        ResponseEntity<Todo> response = restTemplate.getForEntity(createURLWithPort("/todos/" + todo.getId()), Todo.class);
+        HttpHeaders headers = createHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        // Act
+        ResponseEntity<Todo> response = restTemplate.exchange(
+                createURLWithPort("/todos/" + todo.getId()),
+                HttpMethod.GET,
+                entity,
+                Todo.class
+        );
+
+        // Assert
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue(); // Verify the response status is 200 OK
         Todo result = response.getBody();
-
-        assertThat(result).isNotNull();
-        assertThat(result.getTitle()).isEqualTo("Todo 1");
+        assertThat(result).isNotNull(); // Verify the response body is not null
+        assertThat(result.getId()).isEqualTo(todo.getId()); // Verify the ID matches
+        assertThat(result.getTitle()).isEqualTo("Sample Todo"); // Verify the title matches
     }
 
     @Test
@@ -127,32 +140,56 @@ public class TodoControllerIntegrationTest {
 
     @Test
     public void testUpdateTodo() {
+        // Arrange
         Todo todo = new Todo();
-        todo.setTitle("Old Todo");
-        todo = todoRepository.save(todo);
+        todo.setTitle("Original Todo");
+        todo = todoRepository.save(todo); // Save the Todo and get the generated ID
 
-        TodoDTO todoDTO = new TodoDTO();
-        todoDTO.setTitle("Updated Todo");
+        Todo updatedTodo = new Todo();
+        updatedTodo.setTitle("Updated Todo");
 
-        HttpEntity<TodoDTO> requestEntity = new HttpEntity<>(todoDTO);
-        ResponseEntity<Todo> response = restTemplate.exchange(createURLWithPort("/todos/" + todo.getId()), HttpMethod.PUT, requestEntity, Todo.class);
+        HttpHeaders headers = createHeaders();
+        HttpEntity<Todo> entity = new HttpEntity<>(updatedTodo, headers);
+
+        // Act
+        ResponseEntity<Todo> response = restTemplate.exchange(
+                createURLWithPort("/todos/" + todo.getId()),
+                HttpMethod.PUT,
+                entity,
+                Todo.class
+        );
+
+        // Assert
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue(); // Verify the response status is 200 OK
         Todo result = response.getBody();
-
-        assertThat(result).isNotNull();
-        assertThat(result.getTitle()).isEqualTo("Updated Todo");
+        assertThat(result).isNotNull(); // Verify the response body is not null
+        assertThat(result.getId()).isEqualTo(todo.getId()); // Verify the ID matches
+        assertThat(result.getTitle()).isEqualTo("Updated Todo"); // Verify the title is updated
     }
 
     @Test
     public void testDeleteTodo() {
+        // Arrange
         Todo todo = new Todo();
         todo.setTitle("Todo to be deleted");
-        todo = todoRepository.save(todo);
+        todo = todoRepository.save(todo); // Save the Todo and get the generated ID
 
-        restTemplate.delete(createURLWithPort("/todos/" + todo.getId()));
+        HttpHeaders headers = createHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<Todo> response = restTemplate.getForEntity(createURLWithPort("/todos/" + todo.getId()), Todo.class);
-        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
+        // Act
+        ResponseEntity<Void> response = restTemplate.exchange(
+                createURLWithPort("/todos/" + todo.getId()),
+                HttpMethod.DELETE,
+                entity,
+                Void.class
+        );
 
-        assertThat(response.getBody()).isNull();
+        // Assert
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue(); // Verify the response status is 200 OK
+
+        // Verify the Todo is deleted
+        boolean exists = todoRepository.existsById(todo.getId());
+        assertThat(exists).isFalse(); // Verify the Todo no longer exists in the database
     }
 }
