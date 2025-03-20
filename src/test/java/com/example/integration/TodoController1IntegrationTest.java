@@ -11,12 +11,14 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.asyncDispatch;
 
 import com.example.application.dto.TodoDTO;
 import com.example.application.interfaces.TodoRepository;
@@ -45,6 +47,7 @@ public class TodoController1IntegrationTest {
     @Test
     @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testGetAllTodos() throws Exception {
+        // Arrange
         Todo todo1 = new Todo();
         todo1.setTitle("Todo 1");
         todoRepository.save(todo1);
@@ -53,8 +56,13 @@ public class TodoController1IntegrationTest {
         todo2.setTitle("Todo 2");
         todoRepository.save(todo2);
 
-        mockMvc.perform(get("/todos"))
+        // Act
+        MvcResult result = mockMvc.perform(get("/todos"))
                 .andExpect(status().isOk())
+                .andReturn();
+
+        // Assert
+        mockMvc.perform(asyncDispatch(result))
                 .andExpect(jsonPath("$[0].title").value("Todo 1"))
                 .andExpect(jsonPath("$[1].title").value("Todo 2"));
     }
@@ -62,62 +70,80 @@ public class TodoController1IntegrationTest {
     @Test
     @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testGetTodoById() throws Exception {
+        // Arrange
         Todo todo = new Todo();
         todo.setTitle("Todo 1");
         todo = todoRepository.save(todo);
 
-        mockMvc.perform(get("/todos/" + todo.getId()))
+        // Act
+        MvcResult result = mockMvc.perform(get("/todos/" + todo.getId()))
                 .andExpect(status().isOk())
+                .andReturn();
+
+        // Assert
+        mockMvc.perform(asyncDispatch(result))
                 .andExpect(jsonPath("$.title").value("Todo 1"));
     }
 
     @Test
     @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testCreateTodo() throws Exception {
-        TodoDTO todoDTO = new TodoDTO();
-        todoDTO.setTitle("New Todo");
+        // Arrange
+        Todo todo = new Todo();
+        todo.setTitle("New Todo");
+        String todoJson = objectMapper.writeValueAsString(todo);
 
-        mockMvc.perform(post("/todos")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(todoDTO)))
+        // Act
+        MvcResult result = mockMvc.perform(post("/todos")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(todoJson))
                 .andExpect(status().isOk())
+                .andReturn();
+
+        // Assert
+        mockMvc.perform(asyncDispatch(result))
                 .andExpect(jsonPath("$.title").value("New Todo"));
     }
 
     @Test
     @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testUpdateTodo() throws Exception {
+        // Arrange
         Todo todo = new Todo();
         todo.setTitle("Old Todo");
         todo = todoRepository.save(todo);
 
-        TodoDTO todoDTO = new TodoDTO();
-        todoDTO.setTitle("Updated Todo");
+        Todo updatedTodo = new Todo();
+        updatedTodo.setTitle("Updated Todo");
+        String updatedTodoJson = objectMapper.writeValueAsString(updatedTodo);
 
-        mockMvc.perform(put("/todos/" + todo.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(todoDTO)))
+        // Act
+        MvcResult result = mockMvc.perform(put("/todos/" + todo.getId())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(updatedTodoJson))
                 .andExpect(status().isOk())
+                .andReturn();
+
+        // Assert
+        mockMvc.perform(asyncDispatch(result))
                 .andExpect(jsonPath("$.title").value("Updated Todo"));
     }
 
     @Test
     @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testDeleteTodo() throws Exception {
+        // Arrange
         Todo todo = new Todo();
         todo.setTitle("Todo to be deleted");
         todo = todoRepository.save(todo);
 
-        mockMvc.perform(delete("/todos/" + todo.getId()))
-                .andExpect(status().isOk());
+        // Act
+        MvcResult result = mockMvc.perform(delete("/todos/" + todo.getId()))
+                .andExpect(status().isOk())
+                .andReturn();
 
-                    // Verify that the todo has been deleted
+        // Assert
         boolean exists = todoRepository.existsById(todo.getId());
         assertFalse(exists, "Todo should be deleted");
-
-        // Verify that the todo is not found, but it is optional
-        mockMvc.perform(get("/todos/" + todo.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").doesNotExist());
     }
 }

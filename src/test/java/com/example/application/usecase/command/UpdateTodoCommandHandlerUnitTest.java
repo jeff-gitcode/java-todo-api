@@ -3,8 +3,7 @@ package com.example.application.usecase.command;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import com.example.application.usecase.todo.UpdateTodoCommandHandler;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -12,6 +11,7 @@ import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
 import com.example.application.interfaces.TodoRepository;
+import com.example.application.usecase.todo.UpdateTodoCommandHandler;
 import com.example.domain.command.UpdateTodoCommand;
 import com.example.domain.model.Todo;
 
@@ -23,12 +23,14 @@ public class UpdateTodoCommandHandlerUnitTest {
     @InjectMocks
     private UpdateTodoCommandHandler updateTodoCommandHandler;
 
-    public UpdateTodoCommandHandlerUnitTest() {
+    @BeforeEach
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     public void testHandle() {
+        // Arrange
         Todo todo = new Todo();
         todo.setTitle("Old Todo");
 
@@ -38,7 +40,10 @@ public class UpdateTodoCommandHandlerUnitTest {
 
         when(todoRepository.save(todo)).thenReturn(todo);
 
+        // Act
         Todo result = updateTodoCommandHandler.handle(command);
+
+        // Assert
         assertEquals("Updated Todo", result.getTitle());
     }
 }

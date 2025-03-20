@@ -2,14 +2,13 @@ package com.example.presentation.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
@@ -32,24 +31,6 @@ class AuthControllerUnitTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-    }
-
-    @Test
-    void testSignin_Success() {
-        // Arrange
-        SigninUserQuery query = new SigninUserQuery();
-        query.setEmail("test@example.com");
-        query.setPassword("password123");
-
-        when(signinUserQueryHandler.handle(query)).thenReturn("JWT_TOKEN");
-
-        // Act
-        ResponseEntity<String> response = authController.signin(query);
-
-        // Assert
-        assertEquals(200, response.getStatusCodeValue()); // Verify HTTP status code
-        assertEquals("JWT_TOKEN", response.getBody()); // Verify response body
-        verify(signinUserQueryHandler, times(1)).handle(query);
     }
 
     @Test
@@ -79,10 +60,30 @@ class AuthControllerUnitTest {
 
         when(signupUserCommandHandler.handle(command)).thenThrow(new RuntimeException("Signup failed"));
 
-        // Act & Assert
+        // Act
         RuntimeException exception = assertThrows(RuntimeException.class, () -> authController.signup(command));
+
+        // Assert
         assertEquals("Signup failed", exception.getMessage());
         verify(signupUserCommandHandler, times(1)).handle(command);
+    }
+
+    @Test
+    void testSignin_Success() {
+        // Arrange
+        SigninUserQuery query = new SigninUserQuery();
+        query.setEmail("test@example.com");
+        query.setPassword("password123");
+
+        when(signinUserQueryHandler.handle(query)).thenReturn("JWT_TOKEN");
+
+        // Act
+        ResponseEntity<String> response = authController.signin(query);
+
+        // Assert
+        assertEquals(200, response.getStatusCodeValue()); // Verify HTTP status code
+        assertEquals("JWT_TOKEN", response.getBody()); // Verify response body
+        verify(signinUserQueryHandler, times(1)).handle(query);
     }
 
     @Test
@@ -94,8 +95,10 @@ class AuthControllerUnitTest {
 
         when(signinUserQueryHandler.handle(query)).thenThrow(new RuntimeException("Invalid credentials"));
 
-        // Act & Assert
+        // Act
         RuntimeException exception = assertThrows(RuntimeException.class, () -> authController.signin(query));
+
+        // Assert
         assertEquals("Invalid credentials", exception.getMessage());
         verify(signinUserQueryHandler, times(1)).handle(query);
     }

@@ -45,40 +45,68 @@ class JwtUtilUnitTest {
 
     @Test
     void testGenerateToken() {
-        assertNotNull(token);
-        assertTrue(token.length() > 0);
+        // Arrange
+        // (No additional setup needed as the token is already generated in the @BeforeEach method)
+
+        // Act
+        String generatedToken = token;
+
+        // Assert
+        assertNotNull(generatedToken);
+        assertTrue(generatedToken.length() > 0);
     }
 
     @Test
     void testGetUsernameFromToken() {
+        // Arrange
+        String expectedEmail = testEmail;
+
+        // Act
         String username = jwtUtil.getUsernameFromToken(token);
-        assertEquals(testEmail, username);
+
+        // Assert
+        assertEquals(expectedEmail, username);
     }
 
     @Test
     void testValidateJwtToken_ValidToken() {
-        boolean isValid = jwtUtil.validateJwtToken(token);
+        // Arrange
+        String validToken = token;
+
+        // Act
+        boolean isValid = jwtUtil.validateJwtToken(validToken);
+
+        // Assert
         assertTrue(isValid);
     }
 
     @Test
     void testValidateJwtToken_InvalidToken() {
+        // Arrange
         String invalidToken = token + "invalid";
+
+        // Act
         boolean isValid = jwtUtil.validateJwtToken(invalidToken);
+
+        // Assert
         assertFalse(isValid);
     }
 
     @Test
     void testValidateJwtToken_ExpiredToken() {
+        // Arrange
         // Generate an expired token
         String expiredToken = Jwts.builder()
                 .setSubject(testEmail)
-                .setIssuedAt(new Date(System.currentTimeMillis() - 3600000)) // 1 hour ago
-                .setExpiration(new Date(System.currentTimeMillis() - 1800000)) // 30 minutes ago
-                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
+                .setIssuedAt(new Date(System.currentTimeMillis() - 10000)) // Set issued time in the past
+                .setExpiration(new Date(System.currentTimeMillis() - 5000)) // Set expiration time in the past
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
 
+        // Act
         boolean isValid = jwtUtil.validateJwtToken(expiredToken);
+
+        // Assert
         assertFalse(isValid);
     }
 

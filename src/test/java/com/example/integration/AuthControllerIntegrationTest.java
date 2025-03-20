@@ -14,7 +14,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.application.auth.JwtUtil;
@@ -51,12 +50,16 @@ public class AuthControllerIntegrationTest {
         // Arrange
         String signupRequest = objectMapper.writeValueAsString(new SignupRequest("test@example.com", "password123"));
 
-        // Act & Assert
-        mockMvc.perform(post("/auth/signup")
+        // Act
+        MvcResult result = mockMvc.perform(post("/auth/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(signupRequest))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("User registered successfully"));
+                .andReturn();
+
+        // Assert
+        String responseBody = result.getResponse().getContentAsString();
+        assertThat(responseBody).isEqualTo("User registered successfully");
     }
 
     @Test
@@ -70,12 +73,16 @@ public class AuthControllerIntegrationTest {
 
         String signupRequest = objectMapper.writeValueAsString(new SignupRequest("test@example.com", "password123"));
 
-        // Act & Assert
-        mockMvc.perform(post("/auth/signup")
+        // Act
+        MvcResult result = mockMvc.perform(post("/auth/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(signupRequest))
-                .andExpect(status().isBadRequest()) // Expect 400 Bad Request
-                .andExpect(jsonPath("$").value("User already exists")); // Expect error message
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        // Assert
+        String responseBody = result.getResponse().getContentAsString();
+        assertThat(responseBody).isEqualTo("User already exists");
     }
 
     @Test
@@ -89,16 +96,15 @@ public class AuthControllerIntegrationTest {
 
         String signinRequest = objectMapper.writeValueAsString(new SigninRequest("test@example.com", "password123"));
 
-        // Act & Assert
+        // Act
         MvcResult result = mockMvc.perform(post("/auth/signin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(signinRequest))
                 .andExpect(status().isOk())
                 .andReturn();
 
+        // Assert
         String jwtToken = result.getResponse().getContentAsString();
-        System.out.println("JWT Token: " + jwtToken); // Debug the token
-
         assertThat(jwtToken).isNotEmpty(); // Verify the response contains a JWT token
     }
 
@@ -108,12 +114,16 @@ public class AuthControllerIntegrationTest {
         // Arrange
         String signinRequest = objectMapper.writeValueAsString(new SigninRequest("test@example.com", "wrongpassword"));
 
-        // Act & Assert
-        mockMvc.perform(post("/auth/signin")
+        // Act
+        MvcResult result = mockMvc.perform(post("/auth/signin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(signinRequest))
-                .andExpect(status().isUnauthorized()) // Expect 401 Unauthorized
-                .andExpect(jsonPath("$").value("Invalid credentials")); // Expect error message
+                .andExpect(status().isUnauthorized())
+                .andReturn();
+
+        // Assert
+        String responseBody = result.getResponse().getContentAsString();
+        assertThat(responseBody).isEqualTo("Invalid credentials");
     }
 
     // Helper classes for request payloads
