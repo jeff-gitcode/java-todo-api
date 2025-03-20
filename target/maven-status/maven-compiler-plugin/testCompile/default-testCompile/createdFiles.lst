@@ -1,4 +1,5 @@
 com\example\application\auth\JwtUtilUnitTest.class
+com\example\application\usecase\album\GetAlbumsQueryHandlerUnitTest.class
 com\example\application\usecase\command\UpdateTodoCommandHandlerUnitTest.class
 com\example\application\dto\TodoDTOUnitTest.class
 com\example\integration\AuthControllerIntegrationTest.class
@@ -7,11 +8,14 @@ com\example\integration\TodoController1IntegrationTest.class
 com\example\presentation\controller\AuthControllerUnitTest.class
 com\example\application\usecase\command\CreateTodoCommandHandlerUnitTest.class
 com\example\AppUnitTest.class
+com\example\presentation\controller\AlbumControllerUnitTest.class
 com\example\application\auth\JwtRequestFilterUnitTest.class
 com\example\application\service\TodoServiceUnitTest.class
 com\example\application\usecase\command\DeleteTodoCommandHandlerUnitTest.class
 com\example\application\usecase\query\GetTodoByIdQueryHandlerUnitTest.class
 com\example\application\usecase\query\GetAllTodosQueryHandlerUnitTest.class
 com\example\integration\TodoControllerIntegrationTest.class
+com\example\integration\AlbumControllerIntegrationTest.class
+com\example\application\usecase\album\GetAlbumsQueryHandlerUnitTest$1.class
 com\example\presentation\controller\TodoController2UnitTest.class
 com\example\integration\AuthControllerIntegrationTest$SigninRequest.class

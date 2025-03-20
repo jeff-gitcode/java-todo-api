@@ -5,6 +5,7 @@ com\example\domain\model\User.class
 com\example\application\auth\JwtUtil.class
 com\example\presentation\controller\HelloController.class
 com\example\application\usecase\todo\CreateTodoCommandHandler.class
+com\example\domain\query\GetAlbumsQuery.class
 com\example\domain\query\GetTodoByIdQuery.class
 com\example\presentation\controller\AuthController.class
 com\example\application\dto\TodoDTO.class
@@ -13,6 +14,7 @@ com\example\App.class
 com\example\application\usecase\todo\DeleteTodoCommandHandler.class
 com\example\application\config\SecurityConfig.class
 com\example\domain\query\SigninUserQuery.class
+com\example\application\usecase\album\GetAlbumsQueryHandler$1.class
 com\example\application\auth\JwtRequestFilter.class
 com\example\application\interfaces\TodoRepository.class
 com\example\domain\model\Todo.class
@@ -24,7 +26,10 @@ com\example\application\usecase\auth\SignupUserCommandHandler.class
 com\example\domain\command\UpdateTodoCommand.class
 com\example\presentation\GlobalExceptionHandler.class
 com\example\application\usecase\todo\GetAllTodosQueryHandler.class
+com\example\presentation\controller\AlbumController.class
+com\example\domain\model\Album.class
 com\example\application\auth\AuthEntryPointJwt.class
 com\example\domain\query\GetAllTodosQuery.class
 com\example\domain\command\CreateTodoCommand.class
+com\example\application\usecase\album\GetAlbumsQueryHandler.class
 com\example\application\interfaces\UserRepository.class

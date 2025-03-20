@@ -50,7 +50,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Use 'requestMatchers' instead of 'antMatchers'
+                                .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/albums/**").permitAll() // Use 'requestMatchers' instead of 'antMatchers'
                                 .anyRequest().authenticated()
                 );
         // Add the JWT Token filter before the UsernamePasswordAuthenticationFilter

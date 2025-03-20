@@ -50,3 +50,8 @@ Authorization: Bearer {{token}}
 ### Delete a Todo
 DELETE http://localhost:8080/todos/3
 Authorization: Bearer {{token}}
+
+### Get All Albums
+GET http://localhost:8080/albums
+Content-Type: application/json
+```
