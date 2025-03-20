@@ -280,6 +280,10 @@ You can also run tests directly from your IDE (e.g., IntelliJ IDEA or Eclipse):
 
 By following these steps, you can ensure the application is thoroughly tested and functioning as expected.
 
+### Docker Instructions
+
+For instructions on how to build and run the application using Docker, refer to the [Docker Guide](README.Docker.md).
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
