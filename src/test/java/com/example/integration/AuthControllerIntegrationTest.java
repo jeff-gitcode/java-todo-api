@@ -14,15 +14,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.application.config.SecurityConfig;
 import com.example.application.interfaces.UserRepository;
 import com.example.domain.model.User;
-import com.example.presentation.controller.AuthController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {AuthController.class, SecurityConfig.class})
+@SpringBootTest
 @AutoConfigureMockMvc
 public class AuthControllerIntegrationTest {
 
@@ -41,7 +39,7 @@ public class AuthControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser(username = "user", password = "password", roles = "USER")
+    @WithMockUser(username = "test@example.com", password = "password123", roles = "USER")
     public void testSignup_Success() throws Exception {
         // Arrange
         String signupRequest = objectMapper.writeValueAsString(new SignupRequest("test@example.com", "password123"));
@@ -55,6 +53,7 @@ public class AuthControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "test@example.com", password = "password123", roles = "USER")
     public void testSignup_Failure_UserAlreadyExists() throws Exception {
         // Arrange
         User existingUser = new User();
@@ -73,6 +72,7 @@ public class AuthControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "test@example.com", password = "password123", roles = "USER")
     public void testSignin_Success() throws Exception {
         // Arrange
         User user = new User();
@@ -91,6 +91,7 @@ public class AuthControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(username = "user", password = "password", roles = "USER")
     public void testSignin_Failure_InvalidCredentials() throws Exception {
         // Arrange
         String signinRequest = objectMapper.writeValueAsString(new SigninRequest("test@example.com", "wrongpassword"));

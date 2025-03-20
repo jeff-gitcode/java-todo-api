@@ -12,16 +12,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.example.application.auth.JwtUtil;
 import com.example.application.dto.TodoDTO;
 import com.example.application.interfaces.TodoRepository;
 import com.example.domain.model.Todo;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+// @AutoConfigureMockMvc
 public class TodoControllerIntegrationTest {
 
     @LocalServerPort
@@ -33,13 +36,33 @@ public class TodoControllerIntegrationTest {
     @Autowired
     private TodoRepository todoRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    private String jwtToken;
+
     @BeforeEach
     public void setUp() {
         todoRepository.deleteAll();
+
+        // Generate a valid JWT token
+        jwtToken = jwtUtil.generateToken("test@example.com");
+    }
+
+    private HttpHeaders createHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + jwtToken);
+        return headers;
+    }
+
+    private String createURLWithPort(String uri) {
+        return "http://localhost:" + port + uri;
     }
 
     @Test
+    // @WithMockUser(username = "test@example.com", roles = {"USER"})
     public void testGetAllTodos() {
+        // Arrange
         Todo todo1 = new Todo();
         todo1.setTitle("Todo 1");
         todoRepository.save(todo1);
@@ -48,9 +71,19 @@ public class TodoControllerIntegrationTest {
         todo2.setTitle("Todo 2");
         todoRepository.save(todo2);
 
-        ResponseEntity<Todo[]> response = restTemplate.getForEntity(createURLWithPort("/todos"), Todo[].class);
-        List<Todo> todos = Arrays.asList(response.getBody());
+        HttpHeaders headers = createHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(headers);
 
+        // Act
+        ResponseEntity<Todo[]> response = restTemplate.exchange(
+                createURLWithPort("/todos"),
+                HttpMethod.GET,
+                entity,
+                Todo[].class
+        );
+
+        // Assert
+        List<Todo> todos = Arrays.asList(response.getBody());
         assertThat(todos).hasSize(2);
         assertThat(todos.get(0).getTitle()).isEqualTo("Todo 1");
         assertThat(todos.get(1).getTitle()).isEqualTo("Todo 2");
@@ -71,12 +104,23 @@ public class TodoControllerIntegrationTest {
 
     @Test
     public void testCreateTodo() {
+        // Arrange
         TodoDTO todoDTO = new TodoDTO();
         todoDTO.setTitle("New Todo");
 
-        ResponseEntity<Todo> response = restTemplate.postForEntity(createURLWithPort("/todos"), todoDTO, Todo.class);
-        Todo result = response.getBody();
+        HttpHeaders headers = createHeaders();
+        HttpEntity<TodoDTO> entity = new HttpEntity<>(todoDTO, headers);
 
+        // Act
+        ResponseEntity<Todo> response = restTemplate.exchange(
+                createURLWithPort("/todos"),
+                HttpMethod.POST,
+                entity,
+                Todo.class
+        );
+
+        // Assert
+        Todo result = response.getBody();
         assertThat(result).isNotNull();
         assertThat(result.getTitle()).isEqualTo("New Todo");
     }
@@ -110,9 +154,5 @@ public class TodoControllerIntegrationTest {
         assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
 
         assertThat(response.getBody()).isNull();
-    }
-
-    private String createURLWithPort(String uri) {
-        return "http://localhost:" + port + uri;
     }
 }

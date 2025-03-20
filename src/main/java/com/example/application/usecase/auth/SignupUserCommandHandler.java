@@ -21,6 +21,10 @@ public class SignupUserCommandHandler {
         User user = new User();
         user.setEmail(command.getEmail());
         user.setPassword(passwordEncoder.encode(command.getPassword()));
+        // if user exists, throw exception
+        if (userRepository.findByEmail(command.getEmail()).isPresent())
+            throw new RuntimeException("User already exists");
+            
         userRepository.save(user);
         return "User registered successfully";
     }

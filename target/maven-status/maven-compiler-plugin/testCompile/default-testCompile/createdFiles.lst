@@ -7,7 +7,6 @@ com\example\integration\TodoController1IntegrationTest.class
 com\example\presentation\controller\AuthControllerUnitTest.class
 com\example\application\usecase\command\CreateTodoCommandHandlerUnitTest.class
 com\example\AppUnitTest.class
-com\example\presentation\controller\TodoControllerUnitTest.class
 com\example\application\auth\JwtRequestFilterUnitTest.class
 com\example\application\service\TodoServiceUnitTest.class
 com\example\application\usecase\command\DeleteTodoCommandHandlerUnitTest.class
