@@ -22,6 +22,7 @@ com\example\application\usecase\auth\SigninUserQueryHandler.class
 com\example\application\usecase\todo\GetTodoByIdQueryHandler.class
 com\example\application\usecase\auth\SignupUserCommandHandler.class
 com\example\domain\command\UpdateTodoCommand.class
+com\example\presentation\GlobalExceptionHandler.class
 com\example\application\usecase\todo\GetAllTodosQueryHandler.class
 com\example\application\auth\AuthEntryPointJwt.class
 com\example\domain\query\GetAllTodosQuery.class

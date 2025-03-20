@@ -33,6 +33,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<String> signin(@RequestBody SigninUserQuery query) {
-            return ResponseEntity.ok(signinUserQueryHandler.handle(query));
+        var jwtToken = signinUserQueryHandler.handle(query);
+        return ResponseEntity.ok(jwtToken);
     }
 }
