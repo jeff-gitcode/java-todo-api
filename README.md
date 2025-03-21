@@ -129,6 +129,7 @@ java-todo-api
 - Implements CQRS for handling commands and queries separately.
 - JWT authentication for secure access to the API.
 - Swagger UI for API documentation and testing.
+- **CI/CD Pipeline**: Automated build, test, and deployment using GitHub Actions.
 
 ---
 
@@ -150,33 +151,39 @@ The following GIF demonstrates the workflow of the application:
 
 ## Setup Instructions
 
-1. Clone the repository:
+1. **Initialize the Project**:
+   If you haven't already initialized the project, you can use the Spring Initializr CLI to create a new project with the required dependencies:
+
+   ```sh
+   spring init --dependencies=web,data-jpa java-todo-api
+
+2. Clone the repository:
    ```sh
    git clone <repository-url>
    cd java-todo-api
    ```
 
-2. Build the project using Maven:
+3. Build the project using Maven:
    ```sh
    mvn clean install
    or
    mvn dependency:purge-local-repository -DreResolve=true
    ```
 
-3. Run the application:
+4. Run the application:
    ```sh
    mvn spring-boot:run
    or
    mvn org.springframework.boot:spring-boot-maven-plugin:run
    ```
 
-4. Access the API:
+5. Access the API:
 
 API Base URL: http://localhost:8080
 Todos Endpoint: http://localhost:8080/todos
 Albums Endpoint: http://localhost:8080/albums
 
-5. Access Swagger UI:
+6. Access Swagger UI:
 
 URL: http://localhost:8080/swagger-ui/index.html
 
@@ -315,6 +322,29 @@ By following these steps, you can ensure the application is thoroughly tested an
 ### Docker Instructions
 
 For instructions on how to build and run the application using Docker, refer to the [Docker Guide](README.Docker.md).
+
+## CI/CD Pipeline
+
+This project uses **GitHub Actions** for Continuous Integration (CI) and Continuous Deployment (CD). The pipeline ensures that the application is built, tested, and deployed automatically whenever changes are pushed to the repository.
+
+### Pipeline Workflow
+
+1. **Build and Test**:
+   - The pipeline compiles the code and runs all unit and integration tests.
+   - It uses Maven to build the project and execute tests.
+   - Test reports are generated in the `target/surefire-reports` directory.
+
+2. **Artifact Creation**:
+   - The pipeline packages the application into a JAR file.
+   - The JAR file is archived as an artifact for deployment.
+
+3. **Deployment**:
+   - The pipeline deploys the application to a production server.
+   - Deployment is triggered on pushes to the `main` branch or manually via the GitHub Actions interface.
+
+### GitHub Actions Workflow File
+
+The CI/CD pipeline is defined in the `.github/workflows/production-build.yml` file. Below is an overview of the workflow:
 
 ## License
 
