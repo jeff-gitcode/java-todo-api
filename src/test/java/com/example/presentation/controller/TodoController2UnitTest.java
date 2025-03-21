@@ -64,7 +64,7 @@ public class TodoController2UnitTest {
 
         // Assert
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getStatusCode().value()).isEqualTo(200); // HTTP 200 OK
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().size()).isEqualTo(2);
         assertThat(response.getBody().get(0).getTitle()).isEqualTo("Todo 1");
@@ -84,7 +84,7 @@ public class TodoController2UnitTest {
 
         // Assert
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getStatusCode().value()).isEqualTo(200); // HTTP 200 OK
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getTitle()).isEqualTo("Todo 1");
     }
@@ -105,7 +105,7 @@ public class TodoController2UnitTest {
 
         // Assert
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCodeValue()).isEqualTo(201); // HTTP 201 Created
+        assertThat(response.getStatusCode().value()).isEqualTo(201); // HTTP 201 Created
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getTitle()).isEqualTo("New Todo");
     }
@@ -126,7 +126,7 @@ public class TodoController2UnitTest {
 
         // Assert
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getStatusCode().value()).isEqualTo(200); // HTTP 200 OK
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getTitle()).isEqualTo("Updated Todo");
     }
@@ -138,7 +138,7 @@ public class TodoController2UnitTest {
 
         // Assert
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCodeValue()).isEqualTo(204); // HTTP 204 No Content
+        assertThat(response.getStatusCode().value()).isEqualTo(204); // HTTP 204 No Content
         verify(deleteTodoCommandHandler).handle(any(DeleteTodoCommand.class));
     }
 }

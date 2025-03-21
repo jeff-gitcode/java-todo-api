@@ -46,7 +46,7 @@ class AuthControllerUnitTest {
         ResponseEntity<String> response = authController.signup(command);
 
         // Assert
-        assertEquals(200, response.getStatusCodeValue()); // Verify HTTP status code
+        assertEquals(200, response.getStatusCode().value()); // Verify HTTP status code
         assertEquals("User registered successfully", response.getBody()); // Verify response body
         verify(signupUserCommandHandler, times(1)).handle(command);
     }
@@ -81,7 +81,7 @@ class AuthControllerUnitTest {
         ResponseEntity<String> response = authController.signin(query);
 
         // Assert
-        assertEquals(200, response.getStatusCodeValue()); // Verify HTTP status code
+        assertEquals(200, response.getStatusCode().value()); // Verify HTTP status code
         assertEquals("JWT_TOKEN", response.getBody()); // Verify response body
         verify(signinUserQueryHandler, times(1)).handle(query);
     }

@@ -61,7 +61,7 @@ public class AlbumControllerUnitTest {
 
         // Assert
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getStatusCode().value()).isEqualTo(200); // HTTP 200 OK
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().size()).isEqualTo(2);
         assertThat(response.getBody().get(0).getTitle()).isEqualTo("Album 1");
@@ -79,7 +79,7 @@ public class AlbumControllerUnitTest {
 
         // Assert
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getStatusCode().value()).isEqualTo(200); // HTTP 200 OK
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getId()).isEqualTo(1);
         assertThat(response.getBody().getTitle()).isEqualTo("Album 1");
@@ -96,7 +96,7 @@ public class AlbumControllerUnitTest {
 
         // Assert
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCodeValue()).isEqualTo(201); // HTTP 201 Created
+        assertThat(response.getStatusCode().value()).isEqualTo(201); // HTTP 201 Created
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getId()).isEqualTo(1);
         assertThat(response.getBody().getTitle()).isEqualTo("New Album");
@@ -113,7 +113,7 @@ public class AlbumControllerUnitTest {
 
         // Assert
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getStatusCode().value()).isEqualTo(200); // HTTP 200 OK
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getId()).isEqualTo(1);
         assertThat(response.getBody().getTitle()).isEqualTo("Updated Album");
@@ -129,7 +129,7 @@ public class AlbumControllerUnitTest {
 
         // Assert
         assertThat(response).isNotNull();
-        assertThat(response.getStatusCodeValue()).isEqualTo(204); // HTTP 204 No Content
+        assertThat(response.getStatusCode().value()).isEqualTo(204); // HTTP 204 No Content
         assertThat(response.getBody()).isNull(); // No content in the response body
     }
 }
