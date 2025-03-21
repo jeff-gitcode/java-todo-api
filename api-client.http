@@ -1,5 +1,5 @@
 @baseUrl=http://localhost:8080
-@token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQyMzc3NzUxLCJleHAiOjE3NDIzODEzNTF9.WKBfI949yiBRcRrit4I0VgJPJ3c8cwKB6fINmrdJBeJKSUcpYA3EPCmpPeuFPZ7VKvOm1YJUfbwIuy5X_Xx3TA
+// @token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQyNTU2NjM2LCJleHAiOjE3NDI1NjAyMzZ9.ii-giGysL9ttXS_bCcqFjE9ZIbQc72AhihA8WfldOpfImCVPVVH8UvaA5FbaK-vA4fZR6Gxn_Y9Uyrsxpq7jDA
 
 ### User Signup
 POST {{baseUrl}}/auth/signup
@@ -10,7 +10,8 @@ Content-Type: application/json
   "password": "password123"
 }
 
-### User Signin
+### User Signin and store the token
+# @name login
 POST {{baseUrl}}/auth/signin
 Content-Type: application/json
 
@@ -18,8 +19,15 @@ Content-Type: application/json
   "email": "user@example.com",
   "password": "password123"
 }
+### Get User Profile Request:
+@token = {{login.response.body.*}}
 
 ### Extract the token from the signin response
+
+### Get All Todos
+GET {{baseUrl}}/todos
+Authorization: Bearer {{token}}
+
 
 ### Create a Todo
 POST {{baseUrl}}/todos
@@ -30,10 +38,6 @@ Authorization: Bearer {{token}}
   "title": "New Todo"
 }
 
-
-### Get All Todos
-GET {{baseUrl}}/todos
-Authorization: Bearer {{token}}
 
 ### Get a Todo by ID
 GET {{baseUrl}}/todos/1
