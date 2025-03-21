@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,6 @@ import com.example.domain.query.GetTodoByIdQuery;
 
 import jakarta.validation.Valid;
 
-
 @RestController
 @Validated
 @RequestMapping("/todos")
@@ -37,44 +37,48 @@ public class TodoController {
 
     @Autowired
     private GetAllTodosQueryHandler getAllTodosQueryHandler;
+
     @Autowired
     private GetTodoByIdQueryHandler getTodoByIdQueryHandler;
+
     @Autowired
     private DeleteTodoCommandHandler deleteTodoCommandHandler;
+
     @Autowired
     private CreateTodoCommandHandler createTodoCommandHandler;
+
     @Autowired
     private UpdateTodoCommandHandler updateTodoCommandHandler;
 
-
     @GetMapping
-    public List<Todo> getAllTodos() {
-        GetAllTodosQuery query = new GetAllTodosQuery();
-        return getAllTodosQueryHandler.handle(query);
+    public ResponseEntity<List<Todo>> getAllTodos() {
+        List<Todo> todos = getAllTodosQueryHandler.handle(new GetAllTodosQuery());
+        return ResponseEntity.ok(todos);
     }
 
     @GetMapping("/{id}")
-    public Optional<Todo> getTodoById(@PathVariable Integer id) {
-        GetTodoByIdQuery query = new GetTodoByIdQuery(id);
-        return getTodoByIdQueryHandler.handle(query);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteTodoById(@PathVariable Integer id) {
-        DeleteTodoCommand command = new DeleteTodoCommand(id);
-        deleteTodoCommandHandler.handle(command);
+    public ResponseEntity<Todo> getTodoById(@PathVariable Integer id) {
+        Optional<Todo> todo = getTodoByIdQueryHandler.handle(new GetTodoByIdQuery(id));
+        return todo.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Todo createTodo(@Valid @RequestBody TodoDTO todo) {
+    public ResponseEntity<Todo> createTodo(@Valid @RequestBody TodoDTO todo) {
         CreateTodoCommand command = new CreateTodoCommand(todo.getTitle());
-
-        return createTodoCommandHandler.handle(command);
+        Todo createdTodo = createTodoCommandHandler.handle(command);
+        return ResponseEntity.status(201).body(createdTodo); // HTTP 201 Created
     }
-    
+
     @PutMapping("/{id}")
-    public Todo updateTodo(@PathVariable Integer id, @Valid @RequestBody TodoDTO todo) {
+    public ResponseEntity<Todo> updateTodo(@PathVariable Integer id, @Valid @RequestBody TodoDTO todo) {
         UpdateTodoCommand command = new UpdateTodoCommand(id, todo.getTitle());
-        return updateTodoCommandHandler.handle(command);
-    }    
+        Todo updatedTodo = updateTodoCommandHandler.handle(command);
+        return ResponseEntity.ok(updatedTodo);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodoById(@PathVariable Integer id) {
+        deleteTodoCommandHandler.handle(new DeleteTodoCommand(id));
+        return ResponseEntity.noContent().build(); // HTTP 204 No Content
+    }
 }

@@ -3,7 +3,7 @@ package com.example.presentation.controller;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.verify;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 import com.example.application.dto.TodoDTO;
 import com.example.application.usecase.todo.CreateTodoCommandHandler;
@@ -48,7 +49,7 @@ public class TodoController2UnitTest {
     private DeleteTodoCommandHandler deleteTodoCommandHandler;
 
     @Test
-    public void testGetAllTodos() throws Exception {
+    public void testGetAllTodos() {
         // Arrange
         Todo todo1 = new Todo();
         todo1.setTitle("Todo 1");
@@ -59,17 +60,19 @@ public class TodoController2UnitTest {
         given(getAllTodosQueryHandler.handle(any(GetAllTodosQuery.class))).willReturn(Arrays.asList(todo1, todo2));
 
         // Act
-        var result = todoController.getAllTodos();
+        ResponseEntity<java.util.List<Todo>> response = todoController.getAllTodos();
 
         // Assert
-        assertThat(result).isNotNull();
-        assertThat(result.size()).isEqualTo(2);
-        assertThat(result.get(0).getTitle()).isEqualTo("Todo 1");
-        assertThat(result.get(1).getTitle()).isEqualTo("Todo 2");
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().size()).isEqualTo(2);
+        assertThat(response.getBody().get(0).getTitle()).isEqualTo("Todo 1");
+        assertThat(response.getBody().get(1).getTitle()).isEqualTo("Todo 2");
     }
 
     @Test
-    public void testGetTodoById() throws Exception {
+    public void testGetTodoById() {
         // Arrange
         Todo todo = new Todo();
         todo.setTitle("Todo 1");
@@ -77,17 +80,19 @@ public class TodoController2UnitTest {
         given(getTodoByIdQueryHandler.handle(any(GetTodoByIdQuery.class))).willReturn(Optional.of(todo));
 
         // Act
-        var result = todoController.getTodoById(1);
+        ResponseEntity<Todo> response = todoController.getTodoById(1);
 
         // Assert
-        assertThat(result).isPresent();
-        assertThat(result.get().getTitle()).isEqualTo("Todo 1");
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getTitle()).isEqualTo("Todo 1");
     }
 
     @Test
-    public void testCreateTodo() throws Exception {
+    public void testCreateTodo() {
         // Arrange
-        var todoDTO = new TodoDTO();
+        TodoDTO todoDTO = new TodoDTO();
         todoDTO.setTitle("New Todo");
 
         Todo todo = new Todo();
@@ -96,17 +101,19 @@ public class TodoController2UnitTest {
         given(createTodoCommandHandler.handle(any(CreateTodoCommand.class))).willReturn(todo);
 
         // Act
-        var result = todoController.createTodo(todoDTO);
+        ResponseEntity<Todo> response = todoController.createTodo(todoDTO);
 
         // Assert
-        assertThat(result).isNotNull();
-        assertThat(result.getTitle()).isEqualTo("New Todo");
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCodeValue()).isEqualTo(201); // HTTP 201 Created
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getTitle()).isEqualTo("New Todo");
     }
 
     @Test
-    public void testUpdateTodo() throws Exception {
+    public void testUpdateTodo() {
         // Arrange
-        var todoDTO = new TodoDTO();
+        TodoDTO todoDTO = new TodoDTO();
         todoDTO.setTitle("Updated Todo");
 
         Todo todo = new Todo();
@@ -115,20 +122,23 @@ public class TodoController2UnitTest {
         given(updateTodoCommandHandler.handle(any(UpdateTodoCommand.class))).willReturn(todo);
 
         // Act
-        var result = todoController.updateTodo(1, todoDTO);
+        ResponseEntity<Todo> response = todoController.updateTodo(1, todoDTO);
 
         // Assert
-        assertThat(result).isNotNull();
-        assertThat(result.getTitle()).isEqualTo("Updated Todo");
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getTitle()).isEqualTo("Updated Todo");
     }
 
     @Test
-    public void testDeleteTodo() throws Exception {
+    public void testDeleteTodo() {
         // Act
-        todoController.deleteTodoById(0x1);
+        ResponseEntity<Void> response = todoController.deleteTodoById(1);
 
         // Assert
-        // Verify that the deleteTodoCommandHandler's handle method was called with the correct argument
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCodeValue()).isEqualTo(204); // HTTP 204 No Content
         verify(deleteTodoCommandHandler).handle(any(DeleteTodoCommand.class));
     }
 }

@@ -3,6 +3,7 @@ package com.example.presentation.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,27 +45,32 @@ public class AlbumController {
     private DeleteAlbumCommandHandler deleteAlbumCommandHandler;
 
     @GetMapping
-    public List<Album> getAllAlbums() {
-        return getAlbumsQueryHandler.handle(new GetAlbumsQuery());
+    public ResponseEntity<List<Album>> getAllAlbums() {
+        List<Album> albums = getAlbumsQueryHandler.handle(new GetAlbumsQuery());
+        return ResponseEntity.ok(albums);
     }
 
     @GetMapping("/{id}")
-    public Album getAlbumById(@PathVariable Integer id) {
-        return getAlbumByIdQueryHandler.handle(new GetAlbumByIdQuery(id));
+    public ResponseEntity<Album> getAlbumById(@PathVariable Integer id) {
+        Album album = getAlbumByIdQueryHandler.handle(new GetAlbumByIdQuery(id));
+        return ResponseEntity.ok(album);
     }
 
     @PostMapping
-    public Album createAlbum(@RequestBody CreateAlbumCommand command) {
-        return createAlbumCommandHandler.handle(command);
+    public ResponseEntity<Album> createAlbum(@RequestBody CreateAlbumCommand command) {
+        Album album = createAlbumCommandHandler.handle(command);
+        return ResponseEntity.status(201).body(album); // HTTP 201 Created
     }
 
     @PutMapping("/{id}")
-    public Album updateAlbum(@PathVariable Integer id, @RequestBody UpdateAlbumCommand command) {
-        return updateAlbumCommandHandler.handle(new UpdateAlbumCommand(id, command.getUserId(), command.getTitle()));
+    public ResponseEntity<Album> updateAlbum(@PathVariable Integer id, @RequestBody UpdateAlbumCommand command) {
+        Album album = updateAlbumCommandHandler.handle(new UpdateAlbumCommand(id, command.getUserId(), command.getTitle()));
+        return ResponseEntity.ok(album);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAlbum(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteAlbum(@PathVariable Integer id) {
         deleteAlbumCommandHandler.handle(new DeleteAlbumCommand(id));
+        return ResponseEntity.noContent().build(); // HTTP 204 No Content
     }
 }

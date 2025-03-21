@@ -94,7 +94,7 @@ public class TodoController1IntegrationTest {
         MvcResult result = mockMvc.perform(post("/todos")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(todoJson))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
 
         // Assert
@@ -136,7 +136,7 @@ public class TodoController1IntegrationTest {
 
         // Act
         mockMvc.perform(delete("/todos/" + todo.getId()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         // Assert
         boolean exists = todoRepository.existsById(todo.getId());

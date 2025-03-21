@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.doNothing;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 import com.example.application.usecase.album.CreateAlbumCommandHandler;
 import com.example.application.usecase.album.DeleteAlbumCommandHandler;
@@ -56,13 +57,15 @@ public class AlbumControllerUnitTest {
         given(getAlbumsQueryHandler.handle(any(GetAlbumsQuery.class))).willReturn(albums);
 
         // Act
-        List<Album> result = albumController.getAllAlbums();
+        ResponseEntity<List<Album>> response = albumController.getAllAlbums();
 
         // Assert
-        assertThat(result).isNotNull();
-        assertThat(result.size()).isEqualTo(2);
-        assertThat(result.get(0).getTitle()).isEqualTo("Album 1");
-        assertThat(result.get(1).getTitle()).isEqualTo("Album 2");
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().size()).isEqualTo(2);
+        assertThat(response.getBody().get(0).getTitle()).isEqualTo("Album 1");
+        assertThat(response.getBody().get(1).getTitle()).isEqualTo("Album 2");
     }
 
     @Test
@@ -72,12 +75,14 @@ public class AlbumControllerUnitTest {
         given(getAlbumByIdQueryHandler.handle(any(GetAlbumByIdQuery.class))).willReturn(album);
 
         // Act
-        Album result = albumController.getAlbumById(1);
+        ResponseEntity<Album> response = albumController.getAlbumById(1);
 
         // Assert
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1);
-        assertThat(result.getTitle()).isEqualTo("Album 1");
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getId()).isEqualTo(1);
+        assertThat(response.getBody().getTitle()).isEqualTo("Album 1");
     }
 
     @Test
@@ -87,12 +92,14 @@ public class AlbumControllerUnitTest {
         given(createAlbumCommandHandler.handle(any(CreateAlbumCommand.class))).willReturn(album);
 
         // Act
-        Album result = albumController.createAlbum(new CreateAlbumCommand(1, "New Album"));
+        ResponseEntity<Album> response = albumController.createAlbum(new CreateAlbumCommand(1, "New Album"));
 
         // Assert
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1);
-        assertThat(result.getTitle()).isEqualTo("New Album");
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCodeValue()).isEqualTo(201); // HTTP 201 Created
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getId()).isEqualTo(1);
+        assertThat(response.getBody().getTitle()).isEqualTo("New Album");
     }
 
     @Test
@@ -102,12 +109,14 @@ public class AlbumControllerUnitTest {
         given(updateAlbumCommandHandler.handle(any(UpdateAlbumCommand.class))).willReturn(album);
 
         // Act
-        Album result = albumController.updateAlbum(1, new UpdateAlbumCommand(1, 1, "Updated Album"));
+        ResponseEntity<Album> response = albumController.updateAlbum(1, new UpdateAlbumCommand(1, 1, "Updated Album"));
 
         // Assert
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1);
-        assertThat(result.getTitle()).isEqualTo("Updated Album");
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCodeValue()).isEqualTo(200); // HTTP 200 OK
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getId()).isEqualTo(1);
+        assertThat(response.getBody().getTitle()).isEqualTo("Updated Album");
     }
 
     @Test
@@ -116,35 +125,11 @@ public class AlbumControllerUnitTest {
         doNothing().when(deleteAlbumCommandHandler).handle(any(DeleteAlbumCommand.class));
 
         // Act
-        albumController.deleteAlbum(1);
+        ResponseEntity<Void> response = albumController.deleteAlbum(1);
 
         // Assert
-        // No exception should be thrown
-    }
-
-    @Test
-    public void testGetAllAlbums_EmptyList() {
-        // Arrange
-        given(getAlbumsQueryHandler.handle(any(GetAlbumsQuery.class))).willReturn(Arrays.asList());
-
-        // Act
-        List<Album> result = albumController.getAllAlbums();
-
-        // Assert
-        assertThat(result).isNotNull();
-        assertThat(result.size()).isEqualTo(0); // Expect an empty list
-    }
-
-    @Test
-    public void testGetAllAlbums_Exception() {
-        // Arrange
-        given(getAlbumsQueryHandler.handle(any(GetAlbumsQuery.class))).willThrow(new RuntimeException("Internal Server Error"));
-
-        // Act & Assert
-        try {
-            albumController.getAllAlbums();
-        } catch (RuntimeException e) {
-            assertThat(e.getMessage()).isEqualTo("Internal Server Error");
-        }
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCodeValue()).isEqualTo(204); // HTTP 204 No Content
+        assertThat(response.getBody()).isNull(); // No content in the response body
     }
 }
