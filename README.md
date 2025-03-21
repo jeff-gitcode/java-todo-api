@@ -130,6 +130,24 @@ java-todo-api
 - JWT authentication for secure access to the API.
 - Swagger UI for API documentation and testing.
 
+---
+
+## Swagger UI Preview
+
+Below is a preview of the Swagger UI for the API:
+
+![Swagger UI Preview](doc/java-todo-api-swagger.png)
+
+---
+
+## Application Workflow
+
+The following GIF demonstrates the workflow of the application:
+
+![Application Workflow](doc/java-todo-api.gif)
+
+---
+
 ## Setup Instructions
 
 1. Clone the repository:
@@ -152,9 +170,15 @@ java-todo-api
    mvn org.springframework.boot:spring-boot-maven-plugin:run
    ```
 
-4. Access the API at `http://localhost:8080/todos`.
+4. Access the API:
 
-5. Access Swagger UI for API documentation and testing at `http://localhost:8080/swagger-ui/index.html`.
+API Base URL: http://localhost:8080
+Todos Endpoint: http://localhost:8080/todos
+Albums Endpoint: http://localhost:8080/albums
+
+5. Access Swagger UI:
+
+URL: http://localhost:8080/swagger-ui/index.html
 
 ## Setting Up the Database
 
@@ -178,13 +202,21 @@ This command will create a `todo.db` SQLite database file and execute the SQL st
 
 ## Usage
 
-- **User Signup**: Send a POST request to `/auth/signup` with a JSON body containing `email` and `password`.
-- **User Signin**: Send a POST request to `/auth/signin` with a JSON body containing `email` and `password`. The response will include a JWT token.
-- **Create a Todo**: Send a POST request to `/todos` with a JSON body containing `title` and the `Authorization: Bearer {token}` header.
-- **Get All Todos**: Send a GET request to `/todos` with the `Authorization: Bearer {token}` header.
-- **Get a Todo by ID**: Send a GET request to `/todos/{id}` with the `Authorization: Bearer {token}` header.
-- **Update a Todo**: Send a PUT request to `/todos/{id}` with the updated JSON body and the `Authorization: Bearer {token}` header.
-- **Delete a Todo**: Send a DELETE request to `/todos/{id}` with the `Authorization: Bearer {token}` header.
+Authentication
+Signup: Send a `POST` request to `/auth/signup` with a JSON body containing `email` and `password`.
+Signin: Send a `POST` request to `/auth/signin` with a JSON body containing `email` and `password`. The response will include a JWT token and its expiration time.
+Todos
+Create a Todo: `POST /todos` with a JSON body containing title and the `Authorization: Bearer {token} header`.
+Get All Todos: `GET /todos` with the `Authorization: Bearer {token} header`.
+Get a Todo by ID: `GET /todos/{id}` with the `Authorization: Bearer {token} header`.
+Update a Todo: `PUT /todos/{id}` with the updated JSON body and the `Authorization: Bearer {token} header`.
+Delete a Todo: `DELETE /todos/{id}` with the `Authorization: Bearer {token} header`.
+Albums
+Create an Album: `POST /albums` with a JSON body containing userId and title and the Authorization: Bearer {token} header.
+Get All Albums: GET /albums with the Authorization: Bearer {token} header.
+Get an Album by ID: GET /albums/{id} with the Authorization: Bearer {token} header.
+Update an Album: PUT /albums/{id} with the updated JSON body and the Authorization: Bearer {token} header.
+Delete an Album: DELETE /albums/{id} with the Authorization: Bearer {token} header.
 
 ## Testing the Project
 

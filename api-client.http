@@ -40,11 +40,11 @@ Authorization: Bearer {{token}}
 
 
 ### Get a Todo by ID
-GET {{baseUrl}}/todos/1
+GET {{baseUrl}}/todos/41
 Authorization: Bearer {{token}}
 
 ### Update a Todo
-PUT {{baseUrl}}/todos/1
+PUT {{baseUrl}}/todos/41
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -53,7 +53,7 @@ Authorization: Bearer {{token}}
 }
 
 ### Delete a Todo
-DELETE {{baseUrl}}/todos/3
+DELETE {{baseUrl}}/todos/41
 Authorization: Bearer {{token}}
 
 ### Get All Albums
