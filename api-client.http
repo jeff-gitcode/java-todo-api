@@ -1,7 +1,8 @@
+@baseUrl=http://localhost:8080
 @token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQyMzc3NzUxLCJleHAiOjE3NDIzODEzNTF9.WKBfI949yiBRcRrit4I0VgJPJ3c8cwKB6fINmrdJBeJKSUcpYA3EPCmpPeuFPZ7VKvOm1YJUfbwIuy5X_Xx3TA
 
 ### User Signup
-POST http://localhost:8080/auth/signup
+POST {{baseUrl}}/auth/signup
 Content-Type: application/json
 
 {
@@ -10,7 +11,7 @@ Content-Type: application/json
 }
 
 ### User Signin
-POST http://localhost:8080/auth/signin
+POST {{baseUrl}}/auth/signin
 Content-Type: application/json
 
 {
@@ -21,7 +22,7 @@ Content-Type: application/json
 ### Extract the token from the signin response
 
 ### Create a Todo
-POST http://localhost:8080/todos
+POST {{baseUrl}}/todos
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -31,15 +32,15 @@ Authorization: Bearer {{token}}
 
 
 ### Get All Todos
-GET http://localhost:8080/todos
+GET {{baseUrl}}/todos
 Authorization: Bearer {{token}}
 
 ### Get a Todo by ID
-GET http://localhost:8080/todos/1
+GET {{baseUrl}}/todos/1
 Authorization: Bearer {{token}}
 
 ### Update a Todo
-PUT http://localhost:8080/todos/1
+PUT {{baseUrl}}/todos/1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -48,10 +49,38 @@ Authorization: Bearer {{token}}
 }
 
 ### Delete a Todo
-DELETE http://localhost:8080/todos/3
+DELETE {{baseUrl}}/todos/3
 Authorization: Bearer {{token}}
 
 ### Get All Albums
-GET http://localhost:8080/albums
+GET {{baseUrl}}/albums
+Authorization: Bearer {{token}}
+
+### Get Album by ID
+GET {{baseUrl}}/albums/1
+Authorization: Bearer {{token}}
+
+### Create a New Album
+POST {{baseUrl}}/albums
 Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "userId": 1,
+  "title": "New Album"
+}
+
+### Update an Album
+PUT {{baseUrl}}/albums/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "userId": 1,
+  "title": "Updated Album Title"
+}
+
+### Delete an Album
+DELETE {{baseUrl}}/albums/1
+Authorization: Bearer {{token}}
 ```

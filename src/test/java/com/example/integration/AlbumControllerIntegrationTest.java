@@ -68,4 +68,71 @@ public class AlbumControllerIntegrationTest {
         assertThat(albums).isNotNull();
         assertThat(albums.length).isGreaterThan(1);// JSONPlaceholder has 100 albums
     }
+
+    @Test
+    public void testGetAlbumById() {
+        HttpHeaders headers = createHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<Album> response = restTemplate.exchange(
+                createURLWithPort("/albums/1"),
+                HttpMethod.GET,
+                entity,
+                Album.class
+        );
+
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
+        assertThat(response.getBody()).isNotNull();
+    }
+
+    @Test
+    public void testCreateAlbum() {
+        Album album = new Album(null, 1, "New Album");
+        HttpHeaders headers = createHeaders();
+        HttpEntity<Album> entity = new HttpEntity<>(album, headers);
+
+        ResponseEntity<Album> response = restTemplate.exchange(
+                createURLWithPort("/albums"),
+                HttpMethod.POST,
+                entity,
+                Album.class
+        );
+
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getTitle()).isEqualTo("New Album");
+    }
+
+    @Test
+    public void testUpdateAlbum() {
+        Album updatedAlbum = new Album(null, 1, "Updated Album");
+        HttpHeaders headers = createHeaders();
+        HttpEntity<Album> entity = new HttpEntity<>(updatedAlbum, headers);
+
+        ResponseEntity<Album> response = restTemplate.exchange(
+                createURLWithPort("/albums/1"),
+                HttpMethod.PUT,
+                entity,
+                Album.class
+        );
+
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getTitle()).isEqualTo("Updated Album");
+    }
+
+    @Test
+    public void testDeleteAlbum() {
+        HttpHeaders headers = createHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<Void> response = restTemplate.exchange(
+                createURLWithPort("/albums/1"),
+                HttpMethod.DELETE,
+                entity,
+                Void.class
+        );
+
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
+    }
 }
